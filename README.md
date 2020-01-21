@@ -71,4 +71,4 @@ Thanks to all contributors who got interested in this project. We're excited to 
 
 ## <a name="license"></a>License
 
-This SDK is distributed under the MIT License,  see [LICENSE](https://github.com/signnow/SignNowJavaAPiClient/LICENSE) for more information.
+This SDK is distributed under the MIT License,  see [LICENSE](https://github.com/signnow/SignNowJavaAPiClient/blob/master/LICENSE) for more information.
