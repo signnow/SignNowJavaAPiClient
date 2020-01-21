@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Adding text tags on a document example</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+Latest action result:
+<p th:text="${message}"/>
+
+<h2>Adding text tags on a document example:</h2>
+<form action="/examples/uploadDocumentWithTags" enctype="multipart/form-data" method="POST">
+    <table>
+        <tr>
+            <td>File to upload:</td>
+            <td><input name="file" type="file"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Upload"/></td>
+        </tr>
+    </table>
+</form>
+<p><a th:href="@{/examples/}"><h3>Back to examples list</h3></a></p>
+</body>
+</html>

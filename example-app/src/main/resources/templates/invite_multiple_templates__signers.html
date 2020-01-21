@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Signature invite for multiple templates and multiple signers example</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+Latest action result:
+<p th:text="${message}"/>
+
+<h2>Signature invite for multiple templates and multiple signers:</h2>
+<form action="/examples/multipleTemplatesAndSigners" method="POST" th:object="${multipleTemplatesAndSigners}">
+    <h3>Select a pair of documents for example</h3>
+    <p>Choose document 1:
+        <select th:field="*{documentIds[0]}">
+            <option th:each="document: ${documentList}" th:value="${document.documentId}" th:text="${document.documentName}"/>
+        </select>
+    </p>
+
+    <p>Choose document 2:
+        <select th:field="*{documentIds[1]}">
+            <option th:each="document: ${documentList}" th:value="${document.documentId}" th:text="${document.documentName}"/>
+        </select>
+    </p>
+
+    <h3>Define signers with explicit roles</h3>
+    <p>Signer 1 role name<input th:field="*{signers[0].role}" type="text"/></p>
+    <p>Signer 1 email<input th:field="*{signers[0].email}" type="text"/></p>
+    <p>Signer 2 role name<input th:field="*{signers[1].role}" type="text"/></p>
+    <p>Signer 2 email<input th:field="*{signers[1].email}" type="text"/></p>
+
+    <h3>Completion email</h3>
+    <p>Email <input th:field="*{email}" type="text"/></p>
+    <p>Message <input th:field="*{message}" type="text"/></p>
+    <p>Subject <input th:field="*{subject}" type="text"/></p>
+
+    <p><input type="submit" value="Submit"/></p>
+</form>
+<p><a th:href="@{/examples/}"><h3>Back to examples list</h3></a></p>
+</body>
+</html>

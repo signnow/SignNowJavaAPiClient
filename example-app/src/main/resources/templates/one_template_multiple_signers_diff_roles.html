@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Signature invite for one template and multiple signers (with Different Roles) example</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+Latest action result:
+<p th:text="${message}"/>
+
+<h2>Signature invite for one template and multiple signers (with Different roles):</h2>
+<form action="/examples/oneTemplateMultipleSigners" method="POST" th:object="${oneTemplateMultipleSigners}">
+    <p>Choose document:
+        <select th:field="*{documentId}">
+            <option th:each="document: ${documentList}" th:value="${document.documentId}" th:text="${document.documentName}"/>
+        </select>
+    </p>
+    <p>Sender email <input th:field="*{senderEmail}" type="text"/></p>
+    <p>Subject <input th:field="*{subject}" type="text"/></p>
+    <p>Message <input th:field="*{message}" type="text"/></p>
+    <p>Signer1 role <input th:field="*{signers[0].role}" type="text"/></p>
+    <p>Signer1 role password<input th:field="*{signers[0].password}" type="password"/></p>
+    <p>Signer1 email <input th:field="*{signers[0].email}" type="text"/></p>
+    <p>Signer2 role <input th:field="*{signers[1].role}" type="text"/></p>
+    <p>Signer2 role password<input th:field="*{signers[1].password}" type="password"/></p>
+    <p>Signer2 email <input th:field="*{signers[1].email}" type="text"/></p>
+    <p><input type="submit" value="Submit"/></p>
+</form>
+<p><a th:href="@{/examples/}"><h3>Back to examples list</h3></a></p>
+</body>
+</html>

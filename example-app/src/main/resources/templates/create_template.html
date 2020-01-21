@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create template example</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+Latest action result:
+<p th:text="${message}"/>
+
+<h2>Create template:</h2>
+<form action="/examples/createTemplate" method="POST" th:object="${template}">
+    <p>Choose document:
+        <select th:field="*{documentId}">
+            <option th:each="document: ${documentList}" th:value="${document.documentId}" th:text="${document.documentName}"/>
+        </select>
+    </p>
+    <p>Template name: <input th:field="*{templateName}" type="text"/></p>
+    <p><input type="submit" value="Submit"/></p>
+</form>
+<p><a th:href="@{/examples/}"><h3>Back to examples list</h3></a></p>
+</body>
+</html>

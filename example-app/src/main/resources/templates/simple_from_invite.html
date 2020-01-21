@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Signature invite for template and one signer example</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+    Latest action result:
+    <p th:text="${message}"/>
+
+    <h2>Signature invite for one template and one signer:</h2>
+    <form action="/examples/simpleFromInvite" method="POST" th:object="${simpleFromInvite}">
+        <p>Choose document:
+            <select th:field="*{documentId}">
+                <option th:each="document: ${documentList}" th:value="${document.documentId}" th:text="${document.documentName}"/>
+            </select>
+        </p>
+        <h3>Signature invite email:</h3>
+        <p>From <input th:field="*{from}" type="text"/></p>
+        <p>To <input th:field="*{to}" type="text"/></p>
+        <p>Subject <input th:field="*{subject}" type="text"/></p>
+        <p>Message <input th:field="*{message}" type="text"/></p>
+        <p><input type="submit" value="Submit"/></p>
+    </form>
+    <p><a th:href="@{/examples/}"><h3>Back to examples list</h3></a></p>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Setting the initial values for template fields example</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+Latest action result:
+<p th:text="${message}"/>
+
+<h2>Prefilled text example:</h2>
+<form action="/examples/prefiledText" method="POST" th:object="${prefilledText}">
+    <p>Choose document:
+        <select th:field="*{documentId}">
+            <option th:each="document: ${documentList}" th:value="${document.documentId}" th:text="${document.documentName}"/>
+        </select>
+    </p>
+    <p>Prefilled text <input th:field="*{prefiledText}" type="text"/></p>
+    <p><input type="submit" value="Submit"/></p>
+</form>
+<p><a th:href="@{/examples/}"><h3>Back to examples list</h3></a></p>
+</body>
+</html>

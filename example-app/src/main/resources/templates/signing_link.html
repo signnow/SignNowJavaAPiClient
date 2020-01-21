@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Signing link example</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+    Latest action result:
+    <p th:text="${message}"/>
+    <a th:href="${link}" th:text="${link}" target="_blank"/>
+
+    <h2>Signing link creation example</h2>
+    <form action="/examples/signingLink" method="post" th:object="${signingLink}" >
+        <p>Choose document:
+            <select th:field="*{documentId}">
+                <option th:each="document: ${documentList}" th:value="${document.documentId}" th:text="${document.documentName}"/>
+            </select>
+        </p>
+        <p><input type="submit" value="Submit"/></p>
+    </form>
+    <p><a th:href="@{/examples/}"><h3>Back to examples list</h3></a></p>
+</body>
+</html>
