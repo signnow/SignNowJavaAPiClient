@@ -7,7 +7,7 @@ This is a two module application, where client-lib is a library which intended t
 Get your account at https://www.signnow.com/developers
 
 #### API Contact Information
-If you have questions about the SignNow API, please visit https://help.signnow.com/docs or email api@signnow.com.<br>
+If you have questions about the SignNow API, please visit https://docs.signnow.com or email api@signnow.com.<br>
 **Support**: To contact SignNow support, please email support@signnow.com or api@signnow.com.<br>
 **Sales**: For pricing information, please call (800) 831-2050, email sales@signnow.com or visit https://www.signnow.com/contact.
 
@@ -19,7 +19,7 @@ If you have questions about the SignNow API, please visit https://help.signnow.c
 | Entry page: | https://eval.signnow.com |
 
 #### Examples 
-To run the examples you will need an API key. You can get one here https://www.signnow.com/api. For a full list of accepted parameters, refer to the SignNow REST Endpoints API guide: https://help.signnow.com/docs.
+To run the examples you will need an API key. You can get one here https://www.signnow.com/api. For a full list of accepted parameters, refer to the SignNow REST Endpoints API guide: https://docs.signnow.com/reference.
 
 ## Contents
 
@@ -30,7 +30,7 @@ To run the examples you will need an API key. You can get one here https://www.s
 
 ## <a name="documentation"></a>Documentation
 
-Read about the available SignNow features in [SignNow API Docs](https://help.signnow.com) .
+Read about the available SignNow features in [SignNow API Docs](https://docs.signnow.com) .
 
 ## <a name="get-started"></a>Get started
 To start using the API you have to create a SignNow account [here](https://www.signnow.com/developers)
