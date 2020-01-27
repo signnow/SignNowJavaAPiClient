@@ -18,13 +18,11 @@ If you have questions about the SignNow API, please visit https://docs.signnow.c
 | Application: | https://app-eval.signnow.com | https://app.signnow.com |
 | Entry page: | https://eval.signnow.com |
 
-#### Examples 
-To run the examples you will need an API key. You can get one here https://www.signnow.com/api. For a full list of accepted parameters, refer to the SignNow REST Endpoints API guide: https://docs.signnow.com/reference.
-
 ## Contents
 
 - [Documentation](#documentation)
 - [Get started](#get-started)
+- [Examples](#examples)
 - [Contribution guidelines](#contribution-guidelines)
 - [License](#license)
 
@@ -55,6 +53,30 @@ SNClientBuilder.get("apiUrl", "clientId", "clientSecret");
 
 If you wish to run an example application - set parameters named in the ```\example-app\src\main\resources\application.properties```
 Feel free to try provided examples and explore corresponding code.
+
+## <a name="examples"></a>Examples 
+To run the examples you will need an API key. You can get one here https://www.signnow.com/api. For a full list of accepted parameters, refer to the SignNow REST Endpoints API guide: https://docs.signnow.com/reference.
+
+**Note:** next examples is a list of common use-cases only, while client library is intend to provide general wrapper and DTO objects for API calls. Thus you are not limited to mentioned here examples and free to use any provided API mapped method.  
+
+##### User:
+* [Login](https://github.com/signnow/SignNowJavaAPiClient/blob/12de7d7c760229fa865a6550dc5113f86683d11c/example-app/src/main/java/com/signnow/examples/controller/Login.java#L37)
+
+##### Document
+* [Retrieve a List of the User’s Documents](https://github.com/signnow/SignNowJavaAPiClient/blob/12de7d7c760229fa865a6550dc5113f86683d11c/example-app/src/main/java/com/signnow/examples/controller/Login.java#L46)
+* [Upload document](https://github.com/signnow/SignNowJavaAPiClient/blob/12de7d7c760229fa865a6550dc5113f86683d11c/example-app/src/main/java/com/signnow/examples/controller/Examples.java#L47)
+* [Upload File & Extract Fields](https://github.com/signnow/SignNowJavaAPiClient/blob/12de7d7c760229fa865a6550dc5113f86683d11c/example-app/src/main/java/com/signnow/examples/controller/Examples.java#L406)
+* [Update Document (add prefilled fields)](https://github.com/signnow/SignNowJavaAPiClient/blob/12de7d7c760229fa865a6550dc5113f86683d11c/example-app/src/main/java/com/signnow/examples/controller/Examples.java#L321)
+* [Update Document (add fields)](https://github.com/signnow/SignNowJavaAPiClient/blob/12de7d7c760229fa865a6550dc5113f86683d11c/example-app/src/main/java/com/signnow/examples/controller/Examples.java#L439)
+* [Create Free Form Invite](https://github.com/signnow/SignNowJavaAPiClient/blob/12de7d7c760229fa865a6550dc5113f86683d11c/example-app/src/main/java/com/signnow/examples/controller/Examples.java#L120)
+
+##### Links
+* [Create signing link](https://github.com/signnow/SignNowJavaAPiClient/blob/12de7d7c760229fa865a6550dc5113f86683d11c/example-app/src/main/java/com/signnow/examples/controller/Examples.java#L79)
+
+##### Template
+* [Create a Template](https://github.com/signnow/SignNowJavaAPiClient/blob/12de7d7c760229fa865a6550dc5113f86683d11c/example-app/src/main/java/com/signnow/examples/controller/Examples.java#L367)
+* [Create Invite to Sign a Template for multiple signers](https://github.com/signnow/SignNowJavaAPiClient/blob/12de7d7c760229fa865a6550dc5113f86683d11c/example-app/src/main/java/com/signnow/examples/controller/Examples.java#L175)
+* [Create Invite to Sign multiple Templates for multiple signers](https://github.com/signnow/SignNowJavaAPiClient/blob/12de7d7c760229fa865a6550dc5113f86683d11c/example-app/src/main/java/com/signnow/examples/controller/Examples.java#L248)
 
 
 ## <a name="contribution-guidelines"></a>Contribution guidelines
