@@ -2,14 +2,9 @@
 
 SignNow allows you to embed legally-binding e-signatures into your app, CRM or cloud storage. Send documents for signature directly from your website. Invite multiple signers to finalize contracts. Track status of your requests and download signed copies automatically.
 
-This is a two module application, where client-lib is a library which intended to use for the SignNow API use, taking all the routines of authentication, request building and provides simple DTO objects to use in your applications. Second module, named example-app, is a Spring Boot application which contains example implementation of use-cases of SignNow API with use of introduced client library.
+This is a two module application which consists of the client-lib library and the example-app module. The client-lib library is used to interact with SignNow API. It covers all the authentication routines, request building and provides simple DTO objects to use in your applications. The second module, example-app, is a Spring Boot application which contains implementation examples of SignNow API use-cases.
 
 Get your account at https://www.signnow.com/developers
-
-#### API Contact Information
-If you have questions about the SignNow API, please visit https://docs.signnow.com or email api@signnow.com.<br>
-**Support**: To contact SignNow support, please email support@signnow.com or api@signnow.com.<br>
-**Sales**: For pricing information, please call (800) 831-2050, email sales@signnow.com or visit https://www.signnow.com/contact.
 
 #### API and Application
 | Resources | Sandbox | Production |
@@ -37,7 +32,7 @@ Make sure you have Maven installed. Checkout this repo, cd into repo root direct
 ```
 mvn clean install -pl client-lib
 ```
-This will add client lib into your local maven repo. Next add a dependency to your app pom file:
+This will add client lib into your local Maven repo. Next, add a dependency to your app pom file:
 ```xml
 <dependency>
     <groupId>com.signnow</groupId>
@@ -46,18 +41,18 @@ This will add client lib into your local maven repo. Next add a dependency to yo
 </dependency>   
 ```
 
-In your code get SN API client instance by calling next method with corresponding parameters:
+In your code get SN API client instance by calling the next method with corresponding parameters:
 ```java
 SNClientBuilder.get("apiUrl", "clientId", "clientSecret");
 ```
 
-If you wish to run an example application - set parameters named in the ```\example-app\src\main\resources\application.properties```
-Feel free to try provided examples and explore corresponding code.
+If you'd like to run an example application - set parameters named in the ```\example-app\src\main\resources\application.properties```
+Feel free to try the provided examples and explore the corresponding code.
 
 ## <a name="examples"></a>Examples 
 To run the examples you will need an API key. You can get one here https://www.signnow.com/api. For a full list of accepted parameters, refer to the SignNow REST Endpoints API guide: https://docs.signnow.com/reference.
 
-**Note:** next examples is a list of common use-cases only, while client library is intend to provide general wrapper and DTO objects for API calls. Thus you are not limited to mentioned here examples and free to use any provided API mapped method.  
+**Note:** In the following examples we've listed only the common use-cases but this list shouldn't limit your requests. The client library provides an all-purpose wrapper and DTO objects for any API call to SignNow. Feel free to use any method from the client library.  
 
 ##### User:
 * [Login](https://github.com/signnow/SignNowJavaAPiClient/blob/12de7d7c760229fa865a6550dc5113f86683d11c/example-app/src/main/java/com/signnow/examples/controller/Login.java#L37)
@@ -80,7 +75,7 @@ To run the examples you will need an API key. You can get one here https://www.s
 
 
 ## <a name="contribution-guidelines"></a>Contribution guidelines
-Thanks to all contributors who got interested in this project. We're excited to hear from you. Here are some tips to make our collaboration meaningful and bring its best results to life:
+Many thanks to all the contributors who got interested in this project. We're excited to hear from you. Here are some tips to make our collaboration meaningful and bring its best results to life:
 
 * We accept pull requests from the community. Please, send your pull requests to the **DEVELOP branch** which is the consolidated work-in-progress branch. We don't accept requests to the Master branch.
 
@@ -94,3 +89,8 @@ Thanks to all contributors who got interested in this project. We're excited to 
 ## <a name="license"></a>License
 
 This SDK is distributed under the MIT License,  see [LICENSE](https://github.com/signnow/SignNowJavaAPiClient/blob/master/LICENSE) for more information.
+
+#### API Contact Information
+If you have questions about the SignNow API, please visit https://docs.signnow.com or email api@signnow.com.<br>
+**Support**: To contact SignNow support, please email support@signnow.com or api@signnow.com.<br>
+**Sales**: For pricing information, please call (800) 831-2050, email sales@signnow.com or visit https://www.signnow.com/contact.
