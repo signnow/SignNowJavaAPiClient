@@ -7,7 +7,6 @@ import org.glassfish.jersey.client.JerseyInvocation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Matchers;
 
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class DocumentsServiceTest extends CommonServiceTestCase {
@@ -160,6 +159,16 @@ class DocumentsServiceTest extends CommonServiceTestCase {
                 , anyMap()
                 , eq(null)
                 , eq(Document.DocumentDownloadLink.class));
+    }
+
+    @Test
+    void createEmbeddedInvites() throws SNException {
+        Document.EmbeddedInviteResponse response = mock(Document.EmbeddedInviteResponse.class);
+        Document.EmbeddedInviteRequest request = mock(Document.EmbeddedInviteRequest.class);
+        when(clientMock.post(anyString(), anyMap(), eq(request), eq(Document.EmbeddedInviteResponse.class))).thenReturn(response);
+        service.createEmbeddedInvites("1", request);
+        verify(clientMock, times(1))
+                .post(anyString(), anyMap(), eq(request), eq(Document.EmbeddedInviteResponse.class));
     }
 
     private InputStream getSomeInputStream() {

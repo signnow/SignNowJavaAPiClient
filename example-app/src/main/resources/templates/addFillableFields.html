@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Adding fillable fields example</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+Latest action result:
+<p th:text="${message}"/>
+
+<h2>Adding fillable fields:</h2>
+<th:block th:insert="fragments/formsFragments.html :: addFieldsForm"></th:block>
+
+<p><a th:href="@{/examples/}">
+<h3>Back to examples list</h3></a></p>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form fragments</title>
+</head>
+<body>
+<form action="/examples/uploadDocument" enctype="multipart/form-data" method="POST" th:fragment="uploadFileForm">
+    <table>
+        <tr>
+            <td>File to upload:</td>
+            <td><input name="file" type="file"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Upload"/></td>
+        </tr>
+    </table>
+</form>
+<form action="/examples/addFillableFields" method="POST" th:fragment="addFieldsForm" th:object="${fillableFields}">
+    <p>Choose document:
+        <select id="documentId" name="documentId">
+            <option th:each="document: ${documentList}" th:text="${document.documentName}"
+                    th:value="${document.documentId}" th:selected="${selectedDocId == document.documentId}"/>
+        </select>
+    </p>
+    <p>Signature field role name <input th:field="*{signatureFieldRole}" type="text"/></p>
+    <p>Text field role name <input th:field="*{textFieldRole}" type="text"/></p>
+    <p><input type="submit" value="Submit"/></p>
+</form>
+</body>
+</html>

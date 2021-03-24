@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Upload document example</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+    Latest action result:
+    <p th:text="${message}"/>
+    <h2>Upload document:</h2>
+    <div th:replace="fragments/formsFragments.html :: uploadFileForm"></div>
+    <p><a th:href="@{/examples/}"><h3>Back to examples list</h3></a></p>
+</body>
+</html>
