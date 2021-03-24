@@ -41,7 +41,7 @@ public interface Documents {
      * All embedded invites created for the document will be deleted.
      *
      * @param documentId the documentId of the document containing embedded invites.
-     * @return the 204 status code will be return if the embedded invites have been deleted successfully.
+     * @return the 204 status code will be returned if the embedded invites have been deleted successfully.
      * @throws SNException
      */
     int deleteEmbeddedInvite(final String documentId) throws SNException;
