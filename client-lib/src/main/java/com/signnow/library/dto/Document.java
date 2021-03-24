@@ -3,9 +3,7 @@ package com.signnow.library.dto;
 import com.fasterxml.jackson.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Document extends GenericId {
@@ -58,8 +56,7 @@ public class Document extends GenericId {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Signature {
-        public String id;
+    public static class Signature extends GenericId {
         @JsonProperty("user_id")
         public String userId;
         public String email;
@@ -74,8 +71,7 @@ public class Document extends GenericId {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class DocumentField {
-        public String id;
+    public static class DocumentField extends GenericId {
         public FieldType type;
         @JsonProperty("role_id")
         public String roleId;
@@ -92,17 +88,6 @@ public class Document extends GenericId {
         public String fieldTemplateId;
         @JsonProperty("field_id")
         public String fieldId;
-        @JsonIgnore
-        public Map<String, String> attributes = new HashMap<>();
-
-        @JsonAnyGetter
-        public void setAttribute(final String key, final Object value) {
-            if (value == null) {
-                attributes.put(key, null);
-            } else {
-                attributes.put(key, value.toString());
-            }
-        }
     }
 
     public static class Role {
