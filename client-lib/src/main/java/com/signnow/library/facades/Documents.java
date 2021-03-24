@@ -29,4 +29,20 @@ public interface Documents {
     void deleteDocument(String documentId) throws SNException;
 
     String getDownloadLink(String documentId) throws SNException;
+
+    Document.EmbeddedInviteResponse createEmbeddedInvites(final String documentId,
+                                                          final Document.EmbeddedInviteRequest request) throws SNException;
+
+    Document.GenerateEmbeddedSigningLinkResponse generateEmbeddedInviteLink(final String documentId,
+                                                                            final String fieldId,
+                                                                            final Document.GenerateEmbeddedSigningLinkRequest request) throws SNException;
+
+    /**
+     * All embedded invites created for the document will be deleted.
+     *
+     * @param documentId the documentId of the document containing embedded invites.
+     * @return the 204 status code will be returned if the embedded invites have been deleted successfully.
+     * @throws SNException
+     */
+    int deleteEmbeddedInvite(final String documentId) throws SNException;
 }

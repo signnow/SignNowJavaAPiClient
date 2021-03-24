@@ -17,6 +17,15 @@ public class Document extends GenericId {
     public String updated;
     @JsonProperty("original_filename")
     public String originalFilename;
+    @JsonProperty("origin_document_id")
+    public String originDocumentId;
+    public String owner;
+    @JsonProperty(value = "template", defaultValue = "false")
+    public boolean template;
+    public Thumbnail thumbnail;
+    public List<Signature> signatures;
+    public List<Tag> tags;
+    public List<DocumentField> fields;
     @JsonProperty("version_time")
     public String versionTime;
     /**
@@ -28,6 +37,7 @@ public class Document extends GenericId {
      * Free form invites info
      */
     public List<DocumentSignRequestInfo> requests;
+    public List<Role> roles;
 
     public static class SigningLinkRequest {
         @JsonProperty("document_id")
@@ -36,6 +46,62 @@ public class Document extends GenericId {
         public SigningLinkRequest(String documentId) {
             this.documentId = documentId;
         }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Thumbnail {
+        public String small;
+        public String medium;
+        public String large;
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Signature extends GenericId {
+        @JsonProperty("user_id")
+        public String userId;
+        public String email;
+        @JsonProperty("page_number")
+        public String pageNumber;
+        public String width;
+        public String height;
+        public String x;
+        public String y;
+        public String created;
+        public String data;
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class DocumentField extends GenericId {
+        public FieldType type;
+        @JsonProperty("role_id")
+        public String roleId;
+        public String role;
+        public String originator;
+        public String fulfiller;
+        @JsonProperty("field_request_id")
+        public String fieldRequestId;
+        @JsonProperty("element_id")
+        public String elementId;
+        @JsonProperty("field_request_canceled")
+        public String fieldRequestCanceled;
+        @JsonProperty("template_field_id")
+        public String fieldTemplateId;
+        @JsonProperty("field_id")
+        public String fieldId;
+    }
+
+    public static class Role {
+        @JsonProperty("unique_id")
+        public String uniqueId;
+        @JsonProperty("signing_order")
+        public String signingOrder;
+        public String name;
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Tag {
+        public String type;
+        public String name;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -110,7 +176,6 @@ public class Document extends GenericId {
             this.name = name;
         }
 
-        @JsonSetter
         public static FieldType typeOf(String name) {
             for (FieldType type : values()) {
                 if (type.name.equalsIgnoreCase(name)) {
@@ -118,6 +183,11 @@ public class Document extends GenericId {
                 }
             }
             throw new IllegalArgumentException(name + " field not supported.");
+        }
+
+        @JsonValue
+        public String getType() {
+            return name;
         }
 
         @JsonCreator
@@ -175,4 +245,91 @@ public class Document extends GenericId {
         public String link;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class EmbeddedInviteResponse {
+        public List<EmbeddedInviteResult> data = new ArrayList<>();
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class EmbeddedInviteResult {
+        public String id;
+        public String email;
+        public String role_id;
+        public int order;
+        public String status;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class EmbeddedInviteRequest {
+        public List<EmbeddedInvite> invites = new ArrayList<>();
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class EmbeddedInvite {
+        public String email;
+        public String role_id;
+        public int order;
+        public String auth_method;
+
+        public EmbeddedInvite() {
+        }
+
+        public EmbeddedInvite(String email, String role_id, int order, String auth_method) {
+            this.email = email;
+            this.role_id = role_id;
+            this.order = order;
+            this.auth_method = auth_method;
+        }
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class GenerateEmbeddedSigningLinkRequest {
+        public String auth_method;
+        public int link_expiration;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class GenerateEmbeddedSigningLinkResponse {
+        public LinkData data;
+    }
+
+    public static class LinkData {
+        public String link;
+    }
+
+    public enum AuthMethod {
+        PASSWORD("password"),
+        EMAIL("email"),
+        MFA("mfa"),
+        SOCIAL("social"),
+        BIOMETRIC("biometric"),
+        OTHER("other"),
+        NONE("none");
+
+        private final String method;
+
+        AuthMethod(String method) {
+            this.method = method;
+        }
+
+        public static AuthMethod getAuthMethod(final String authMethod) {
+            for (AuthMethod value : values()) {
+                if (value.method.equalsIgnoreCase(authMethod)) {
+                    return value;
+                }
+            }
+            throw new EnumConstantNotPresentException(AuthMethod.class, authMethod);
+        }
+
+        @JsonValue
+        public String getAuthMethod() {
+            return method;
+        }
+
+        @JsonCreator
+        @Override
+        public String toString() {
+            return method;
+        }
+    }
 }

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <title>Embedded signing example</title>
+    <link rel="stylesheet" th:href="@{/webjars/highlightjs/styles/default.min.css}" type="text/css"/>
+    <script th:src="@{/webjars/highlightjs/highlight.min.js}"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+</head>
+<body>
+Latest action result:
+<p th:text="${message}"/>
+<a target="_blank" th:href="${link}" th:text="${link}"/>
+<h2>Create embedded signing invites</h2>
+<ol>
+    <li>
+        <h4>Upload file</h4>
+        <th:block th:insert="fragments/formsFragments.html :: uploadFileForm"></th:block>
+    </li>
+    <li>
+        <h4>Pick file and add fields</h4>
+        <th:block th:insert="fragments/formsFragments.html :: addFieldsForm"></th:block>
+    </li>
+    <li th:if="${!#sets.isEmpty(documentList)}">
+        <h4>Delete embedded invites from document</h4>
+        <form action="/examples/deleteEmbeddedInvite" method="post" th:object="${deleteInviteForm}">
+            <select th:field="*{documentId}">
+                <option value="0">-- select a document --</option>
+                <option th:each="doc : ${documentList}" th:value="${doc.documentId}"
+                        th:text="${doc.documentName}"></option>
+            </select>
+            <input type="submit" value="Delete embedded invite"/>
+        </form>
+    </li>
+    <li>
+        <form th:if="${!#strings.isEmpty(selectedDocId)}" action="/examples/embeddedSigning" method="post"
+              th:object="${form}">
+            <h4 th:text="${'Create embedded invites for &quot;' + form.documentInfo.documentName + '&quot; document'}">
+                Create embedded invites</h4>
+            <fieldset>
+                <input th:field="${form.documentInfo.documentId}" th:value="${form.documentInfo.documentId}"
+                       type="hidden"/>
+                <input th:field="${form.documentInfo.documentName}" th:value="${form.documentInfo.documentName}"
+                       type="hidden"/>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Signer</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Order</th>
+                        <th>Auth method</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="invite, itemStat : *{invites}">
+                        <td th:text="${'Signer ' + itemStat.count}"></td>
+                        <td><input th:field="*{invites[__${itemStat.index}__].email}"/></td>
+                        <td>
+                            <select th:field="*{invites[__${itemStat.index}__].roleId}">
+                                <option th:value="0"> -- select a role --</option>
+                                <option th:each="role : ${invite.availableRoles}" th:text="${role.name}"
+                                        th:value="${role.uniqueId}"></option>
+                            </select>
+                        </td>
+                        <td><input th:field="*{invites[__${itemStat.index}__].order}"/></td>
+                        <td>
+                            <select th:field="*{invites[__${itemStat.index}__].authMethod}">
+                                <option th:value="0"> -- select an auth method --</option>
+                                <option th:each="authMethod : ${T(com.signnow.library.dto.Document$AuthMethod).values()}"
+                                        th:text="${authMethod.authMethod}" th:value="${authMethod.authMethod}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button type="submit">Create embedded invites</button>
+            </fieldset>
+        </form>
+        <div th:if="${!#strings.isEmpty(embeddedInvites)}">
+            <h4 th:text="${'Embedded invites have been created successfully for document: ' + documentInfo.documentName}"></h4>
+            <pre>
+                <code class="language-json" th:text="${embeddedInvites}"></code>
+            </pre>
+        </div>
+    </li>
+
+    <li th:if="${embeddedInvites != null && !embeddedInvites.isEmpty()}">
+        <h4 th:text="${'Generate a link for embedded invite for document &quot;' + documentInfo.documentName + '&quot;'}"></h4>
+        <form action="/examples/generateEmbeddedLink" method="post" th:object="${generateLinkForm}">
+            <fieldset>
+                <input type="hidden" th:field="${generateLinkForm.documentInfo.documentId}"
+                       th:value="${generateLinkForm.documentInfo.documentId}"/>
+                <input type="hidden" th:field="${generateLinkForm.documentInfo.documentName}"
+                       th:value="${generateLinkForm.documentInfo.documentName}"/>
+                <input type="hidden" th:field="*{fields}" th:value="${generateLinkForm.fields}"/>
+                <input type="hidden" th:field="*{embeddedInvites}" th:value="${generateLinkForm.embeddedInvites}"/>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>FieldId</th>
+                        <th>Auth method</th>
+                        <th>Expiration</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <select th:field="*{fieldId}">
+                                <option value="0">-- Select a field id --</option>
+                                <option th:each="id : *{fields}" th:value="${id}" th:text="${id}"></option>
+                            </select>
+                        </td>
+                        <td>
+                            <select th:field="*{auth_method}">
+                                <option th:value="0"> -- select an auth method --</option>
+                                <option th:each="authMethod : ${T(com.signnow.library.dto.Document$AuthMethod).values()}"
+                                        th:text="${authMethod.authMethod}" th:value="${authMethod.authMethod}"></option>
+                            </select>
+                        </td>
+                        <td><input th:field="*{link_expiration}"/></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+            <input type="submit" value="Create link"/>
+        </form>
+        <div th:if="${linkResponse != null && !linkResponse.isEmpty()}">
+            <h4 th:text="${'The link for Embedded invites have been created successfully: ' + documentInfo.documentName}"></h4>
+            <pre>
+                <code class="language-json" th:text="${linkResponse}"></code>
+            </pre>
+        </div>
+    </li>
+</ol>
+
+<p><a th:href="@{/examples/}">
+<h3>Back to examples list</h3></a></p>
+</body>
+</html>

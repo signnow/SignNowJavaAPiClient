@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class DocumentsService extends ApiService implements Documents {
     public DocumentsService(SNClient client) {
@@ -108,5 +109,33 @@ public class DocumentsService extends ApiService implements Documents {
                 null,
                 Document.DocumentDownloadLink.class
         ).link;
+    }
+
+    @Override
+    public Document.EmbeddedInviteResponse createEmbeddedInvites(String documentId, Document.EmbeddedInviteRequest request) throws SNException {
+        return client.post(
+                "/v2/documents/{documentUniqueId}/embedded-invites",
+                Collections.singletonMap("documentUniqueId", documentId),
+                request,
+                Document.EmbeddedInviteResponse.class
+        );
+    }
+
+    @Override
+    public Document.GenerateEmbeddedSigningLinkResponse generateEmbeddedInviteLink(String documentId, String fieldId, Document.GenerateEmbeddedSigningLinkRequest request) throws SNException {
+        return client.post(
+                "/v2/documents/{document_id}/embedded-invites/{fieldInviteUniqueId}/link",
+                Map.of("document_id", documentId, "fieldInviteUniqueId", fieldId),
+                request,
+                Document.GenerateEmbeddedSigningLinkResponse.class
+        );
+    }
+
+    @Override
+    public int deleteEmbeddedInvite(String documentId) throws SNException {
+        return client.delete(
+                "/v2/documents/{document_id}/embedded-invites",
+                Collections.singletonMap("document_id", documentId)
+        );
     }
 }

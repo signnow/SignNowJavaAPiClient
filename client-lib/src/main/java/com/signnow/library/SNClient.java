@@ -110,10 +110,16 @@ public class SNClient implements ServiceProvider {
         return response.readEntity(returnType);
     }
 
+    public int delete(String path, Map<String, String> parameters) throws SNException {
+        Response response = buildRequest(path, parameters).delete();
+        checkAPIException(response);
+        return response.getStatus();
+    }
+
     private Invocation.Builder buildRequest(String path, Map<String, String> parameters) {
         WebTarget target = apiWebTarget.path(path);
         if (parameters != null) {
-            for (String key : parameters.keySet()){
+            for (String key : parameters.keySet()) {
                 WebTarget targetUpd = target.resolveTemplate(key, parameters.get(key));
                 if (!targetUpd.toString().equals(target.toString())) {
                     target = targetUpd;

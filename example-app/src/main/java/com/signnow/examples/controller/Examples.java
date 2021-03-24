@@ -1,5 +1,7 @@
 package com.signnow.examples.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.signnow.examples.model.*;
 import com.signnow.examples.session.UserData;
 import com.signnow.library.SNClient;
@@ -10,18 +12,24 @@ import com.signnow.library.facades.Documents;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Provider;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequestMapping("/examples")
 @Controller
 public class Examples {
+
+    @Autowired
+    private ObjectMapper mapper;
 
     @Autowired
     private Provider<UserData> provider;
@@ -40,20 +48,21 @@ public class Examples {
         if (isUserNotAuthorized()) {
             return getLoginRedirectPage(redirectAttributes, "/examples/uploadDocument");
         }
-
-        return "upload_document";
+        return "uploadDocument";
     }
 
     @PostMapping("/uploadDocument")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    Model model,
-                                   RedirectAttributes redirectAttributes
+                                   RedirectAttributes redirectAttributes,
+                                   HttpServletRequest request
     ) {
+        String documentId = "";
         try {
             if (isUserNotAuthorized()) {
                 return getLoginRedirectPage(redirectAttributes, "/examples/uploadDocument");
             }
-            String documentId = provider.get().getSnClient()
+            documentId = provider.get().getSnClient()
                     .documentsService()
                     .uploadDocument(file.getInputStream(), file.getOriginalFilename());
             updateDocumentList();
@@ -62,7 +71,14 @@ public class Examples {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("exception", e.getMessage());
         }
-        return "upload_document";
+
+        final String templateNameFromReferer = getTemplateNameFromReferer(request);
+        String action = templateNameFromReferer;
+        if (!templateNameFromReferer.equals("uploadDocument")) {
+            redirectAttributes.addFlashAttribute("message", "File uploaded successfully. FileId: " + documentId);
+            action = "redirect:/examples/" + templateNameFromReferer;
+        }
+        return action;
     }
 
     @GetMapping("/signingLink")
@@ -83,7 +99,7 @@ public class Examples {
         try {
             String documentId = signingLinkModel.getDocumentId();
             //Create signature field in document
-            Document.Field sign = createExampleField(20, 20, "Signer role");
+            Document.Field sign = createExampleField(20, 20, "Signer role", Document.FieldType.SIGNATURE, true, "Sign It");
 
             //update document with signeture field
             Documents documentsService = provider.get().getSnClient().documentsService();
@@ -187,9 +203,9 @@ public class Examples {
             model.addAttribute("documentList", provider.get().getUserDocuments());
 
             //Create signature field in document
-            Document.Field sign = createExampleField(25, 25, first.getRole());
+            Document.Field sign = createExampleField(25, 25, first.getRole(), Document.FieldType.SIGNATURE, true, "Sign It");
             //Signature field for second signer
-            Document.Field sign2 = createExampleField(10, 60, second.getRole());
+            Document.Field sign2 = createExampleField(10, 60, second.getRole(), Document.FieldType.SIGNATURE, true, "Sign It");
 
             //update document with signature field
             final Documents documentsService = provider.get().getSnClient().documentsService();
@@ -259,8 +275,8 @@ public class Examples {
             final String documentId2 = multipleTemplatesAndSigners.getDocumentIds().get(1);
 
             //Create signature field in document
-            Document.Field sign = createExampleField(10, 10, first.getRole());
-            Document.Field sign2 = createExampleField(10, 60, second.getRole());
+            Document.Field sign = createExampleField(10, 10, first.getRole(), Document.FieldType.SIGNATURE, true, "Sign It");
+            Document.Field sign2 = createExampleField(10, 60, second.getRole(), Document.FieldType.SIGNATURE, true, "Sign It");
 
             //update document with signature field
             final SNClient snClient = provider.get().getSnClient();
@@ -432,12 +448,17 @@ public class Examples {
             return getLoginRedirectPage(redirectAttributes, "/examples/addFillableFields");
         }
         model.addAttribute("documentList", provider.get().getUserDocuments());
+        model.addAttribute("deleteInviteForm", new DocumentInfo());
         model.addAttribute("fillableFields", new FillableFields());
-        return "add_fillable_fields";
+        return "addFillableFields";
     }
 
     @PostMapping("/addFillableFields")
-    public String addFillableFields(@ModelAttribute FillableFields fillableFields, Model model, RedirectAttributes redirectAttributes) {
+    public String addFillableFields(@ModelAttribute FillableFields fillableFields,
+                                    Model model,
+                                    RedirectAttributes redirectAttributes,
+                                    HttpServletRequest request
+    ) {
         if (isUserNotAuthorized()) {
             return getLoginRedirectPage(redirectAttributes, "/examples/addFillableFields");
         }
@@ -447,27 +468,29 @@ public class Examples {
         try {
             model.addAttribute("fillableFields", new FillableFields());
             model.addAttribute("documentList", provider.get().getUserDocuments());
-            //Signature field
-            Document.Field sign = createExampleField(10, 10, fillableFields.getSignatureFieldRole());
-
-            //Text field
-            Document.Field text = new Document.Field();
-            text.x = 10;
-            text.y = 60;
-            text.height = 30;
-            text.width = 150;
-            text.type = Document.FieldType.TEXT;
-            text.required = false;
-            text.pageNumber = 0;
-            text.role = fillableFields.getTextFieldRole();
-            text.label = "Fill in value here";
+            model.addAttribute("deleteInviteForm", new DocumentInfo());
+            model.addAttribute("selectedDocId", documentId);
+            Document.Field sign = createExampleField(10,
+                    10,
+                    fillableFields.getSignatureFieldRole(),
+                    Document.FieldType.SIGNATURE,
+                    true,
+                    "Your signature here"
+            );
+            Document.Field text = createExampleField(10,
+                    60,
+                    fillableFields.getTextFieldRole(),
+                    Document.FieldType.TEXT,
+                    false,
+                    "Fill in value here"
+            );
 
             //update document fields
             provider.get().getSnClient()
                     .documentsService()
                     .updateDocumentFields(documentId, Arrays.asList(sign, text));
 
-            model.addAttribute("message", String.format("Fillable fields added to the document %s", documentId));
+            model.addAttribute("message", "The fields was successfully added to FileId: " + documentId);
         } catch (SNException e) {
             String message = String.format("Couldn't adding fillable fields to document %s. %s %s"
                     , documentId, e.getMessage(), e.getCause()
@@ -475,7 +498,208 @@ public class Examples {
             model.addAttribute("message", message);
         }
 
-        return "add_fillable_fields";
+        final String templateNameFromReferer = getTemplateNameFromReferer(request);
+        String action = templateNameFromReferer;
+        if (!templateNameFromReferer.equals("addFillableFields")) {
+            redirectAttributes.addFlashAttribute("message", "The fields was successfully added to FileId: " + documentId);
+            redirectAttributes.addFlashAttribute("selectedDocId", documentId);
+            action = "redirect:/examples/" + templateNameFromReferer;
+        }
+        return action;
+    }
+
+    @GetMapping("/embeddedSigning")
+    public String embeddedSigning(@ModelAttribute("selectedDocId") String selectedDocId, RedirectAttributes redirectAttributes, Model model) {
+        if (isUserNotAuthorized()) {
+            return getLoginRedirectPage(redirectAttributes, "/examples/embeddedSigning");
+        }
+        if (!StringUtils.isEmpty(selectedDocId)) {
+            try {
+                setAttributeForCreateEmbeddedInvite(selectedDocId, model, null);
+            } catch (SNException e) {
+                e.printStackTrace();
+                model.addAttribute("message", "Couldn't get information about document by id: " + selectedDocId);
+            }
+        }
+        model.addAttribute("documentList", provider.get().getUserDocuments());
+        model.addAttribute("fillableFields", new FillableFields());
+        model.addAttribute("deleteInviteForm", new DocumentInfo());
+        return "embeddedSigning";
+    }
+
+    private DocumentInfo setAttributeForCreateEmbeddedInvite(String selectedDocId, Model model, RedirectAttributes redirectAttributes) throws SNException {
+        final Document document = provider.get().getSnClient().documentsService().getDocument(selectedDocId);
+        DocumentInfo info = null;
+        if (document != null) {
+            info = new DocumentInfo(document.id, document.document_name);
+            final EmbeddedSigningModel embeddedSigningModel = new EmbeddedSigningModel();
+            embeddedSigningModel.documentInfo = info;
+
+            for (int i = 0; i < 2; i++) {
+                final EmbeddedSigningModel.InviteInfo inviteInfo = new EmbeddedSigningModel.InviteInfo();
+                inviteInfo.availableAuthMethods = Arrays.asList(Document.AuthMethod.values());
+                inviteInfo.availableRoles = document.roles;
+                embeddedSigningModel.invites.add(inviteInfo);
+            }
+            if (redirectAttributes != null) {
+                redirectAttributes.addFlashAttribute("form", embeddedSigningModel);
+            } else {
+                model.addAttribute("form", embeddedSigningModel);
+            }
+        } else {
+            if (redirectAttributes != null) {
+                redirectAttributes.addFlashAttribute("selectedDocId", null);
+            } else {
+                model.addAttribute("selectedDocId", null);
+            }
+        }
+        return info;
+    }
+
+    @PostMapping("/embeddedSigning")
+    public String embeddedSigning(@ModelAttribute EmbeddedSigningModel form,
+                                  RedirectAttributes redirectAttributes,
+                                  Model model
+    ) {
+        if (isUserNotAuthorized()) {
+            return getLoginRedirectPage(redirectAttributes, "/examples/embeddedSigning");
+        }
+        final String documentId = form.documentInfo.getDocumentId();
+        try {
+            Document.EmbeddedInviteRequest request = new Document.EmbeddedInviteRequest();
+            for (EmbeddedSigningModel.InviteInfo invite : form.invites) {
+                request.invites.add(
+                        new Document.EmbeddedInvite(invite.email,
+                                invite.roleId,
+                                invite.order,
+                                invite.authMethod)
+                );
+            }
+            final Document.EmbeddedInviteResponse response = provider.get().getSnClient()
+                    .documentsService()
+                    .createEmbeddedInvites(documentId, request);
+
+            final String embeddedInvites = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(response);
+            final GenerateEmbeddedInviteLinkForm inviteLinkForm = new GenerateEmbeddedInviteLinkForm();
+            inviteLinkForm.fields = response.data.stream().map(data -> data.id)
+                    .collect(Collectors.toSet());
+            inviteLinkForm.documentInfo = form.documentInfo;
+            inviteLinkForm.embeddedInvites = embeddedInvites;
+
+            model.addAttribute("embeddedInvites", embeddedInvites);
+            model.addAttribute("generateLinkForm", inviteLinkForm);
+        } catch (SNException e) {
+            e.printStackTrace();
+            String message = String.format("Couldn't create embedded invites for document %s. %s %s"
+                    , documentId, e.getMessage(), e.getCause()
+            );
+            model.addAttribute("embeddedInvites", "");
+            model.addAttribute("generateLinkForm", new GenerateEmbeddedInviteLinkForm());
+            model.addAttribute("message", message);
+        } catch (JsonProcessingException ex) {
+            ex.printStackTrace();
+            String message = String.format("Couldn't parse embedded invites response for document %s. %s %s"
+                    , documentId, ex.getMessage(), ex.getCause()
+            );
+            model.addAttribute("embeddedInvites", "");
+            model.addAttribute("generateLinkForm", new GenerateEmbeddedInviteLinkForm());
+            model.addAttribute("message", message);
+        } finally {
+            model.addAttribute("documentInfo", form.documentInfo);
+
+            model.addAttribute("message", "The embedded invites have been successfully created.");
+            model.addAttribute("documentList", provider.get().getUserDocuments());
+            model.addAttribute("deleteInviteForm", new DocumentInfo());
+            model.addAttribute("fillableFields", new FillableFields());
+
+        }
+
+        return "embeddedSigning";
+    }
+
+    @PostMapping("/generateEmbeddedLink")
+    public String generateEmbeddedInviteLink(@ModelAttribute GenerateEmbeddedInviteLinkForm generateLinkForm,
+                                             RedirectAttributes redirectAttributes,
+                                             Model model
+    ) {
+        if (isUserNotAuthorized()) {
+            return getLoginRedirectPage(redirectAttributes, "/examples/generateEmbeddedLink");
+        }
+        String documentId = generateLinkForm.documentInfo.getDocumentId();
+        try {
+            Document.GenerateEmbeddedSigningLinkRequest request = new Document.GenerateEmbeddedSigningLinkRequest();
+            request.auth_method = generateLinkForm.auth_method;
+            request.link_expiration = generateLinkForm.link_expiration;
+            ;
+            final Document.GenerateEmbeddedSigningLinkResponse response = provider.get().getSnClient()
+                    .documentsService()
+                    .generateEmbeddedInviteLink(documentId,
+                            generateLinkForm.fieldId,
+                            request
+                    );
+            model.addAttribute("linkResponse", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(response));
+            model.addAttribute("documentInfo", generateLinkForm.documentInfo);
+            model.addAttribute("documentList", provider.get().getUserDocuments());
+            model.addAttribute("deleteInviteForm", new DocumentInfo());
+            model.addAttribute("fillableFields", new FillableFields());
+            model.addAttribute("message", "The embedded invites have been successfully created.");
+            model.addAttribute("embeddedInvites", generateLinkForm.embeddedInvites);
+            model.addAttribute("generateLinkForm", generateLinkForm);
+        } catch (SNException e) {
+            e.printStackTrace();
+            String message = String.format("Couldn't generate embedded invite link for document %s. %s %s"
+                    , documentId, e.getMessage(), e.getCause()
+            );
+            model.addAttribute("message", message);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            String message = String.format("Couldn't parse embedded invites response for document %s. %s %s"
+                    , documentId, e.getMessage(), e.getCause()
+            );
+            model.addAttribute("message", message);
+        }
+        return "embeddedSigning";
+    }
+
+    @PostMapping("/deleteEmbeddedInvite")
+    public String deleteEmbeddedInvite(@ModelAttribute DocumentInfo deleteInviteForm,
+                                       RedirectAttributes redirectAttributes,
+                                       Model model
+    ) {
+        if (isUserNotAuthorized()) {
+            return getLoginRedirectPage(redirectAttributes, "/examples/deleteEmbeddedInvite");
+        }
+        String documentId = deleteInviteForm.getDocumentId();
+        try {
+            int httpStatus = provider.get().getSnClient()
+                    .documentsService()
+                    .deleteEmbeddedInvite(documentId);
+
+            if (httpStatus == 204) {
+                redirectAttributes.addFlashAttribute("message", "The embedded invites have been deleted successfully.");
+            } else {
+                redirectAttributes.addFlashAttribute("message", "The embedded invites haven't been deleted. Status code:" + httpStatus);
+            }
+
+        } catch (SNException e) {
+            e.printStackTrace();
+            String message = String.format("Couldn't delete the embedded invite for the document %s. %s %s"
+                    , documentId, e.getMessage(), e.getCause()
+            );
+            redirectAttributes.addFlashAttribute("message", message);
+        } finally {
+            redirectAttributes.addFlashAttribute("fillableFields", new FillableFields());
+            redirectAttributes.addFlashAttribute("documentList", provider.get().getUserDocuments());
+            redirectAttributes.addFlashAttribute("deleteInviteForm", new DocumentInfo());
+            final DocumentInfo documentInfo;
+            try {
+                documentInfo = setAttributeForCreateEmbeddedInvite(documentId, model, redirectAttributes);
+                redirectAttributes.addFlashAttribute("documentInfo", documentInfo);
+            } catch (SNException ignored) {
+            }
+        }
+
+        return "redirect:/examples/embeddedSigning";
     }
 
     private boolean isUserNotAuthorized() {
@@ -511,17 +735,17 @@ public class Examples {
         }
     }
 
-    private Document.Field createExampleField(int x, int y, String roleName) {
+    private Document.Field createExampleField(int x, int y, String roleName, Document.FieldType fieldType, boolean required, String labelMessage) {
         Document.Field sign = new Document.Field();
         sign.x = x;
         sign.y = y;
         sign.height = 30;
         sign.width = 150;
-        sign.type = Document.FieldType.SIGNATURE;
-        sign.required = true;
+        sign.type = fieldType;
+        sign.required = required;
         sign.pageNumber = 0;
         sign.role = roleName;
-        sign.label = "Your signature here";
+        sign.label = labelMessage;
 
         return sign;
     }
@@ -532,5 +756,11 @@ public class Examples {
         signAction.roleName = roleName;
         signAction.email = email;
         return signAction;
+    }
+
+    private String getTemplateNameFromReferer(HttpServletRequest request) {
+        String referer = request.getHeader("referer");
+        int index = (request.getHeader("origin") + "/examples/").length();
+        return referer.substring(index);
     }
 }
