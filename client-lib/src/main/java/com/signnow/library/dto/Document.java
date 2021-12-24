@@ -127,6 +127,14 @@ public class Document extends GenericId {
         }
     }
 
+    public static class PrefillTextRequest {
+        public final List<FieldText> fields;
+
+        public PrefillTextRequest(List<FieldText> fields) {
+            this.fields = fields;
+        }
+    }
+
     public static class FieldsUpdateRequest {
         public final List<Field> fields;
 
@@ -134,6 +142,20 @@ public class Document extends GenericId {
             this.fields = fields;
         }
     }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class FieldText {
+        @JsonProperty("field_name")
+        public String fieldName;
+        @JsonProperty("prefilled_text")
+        public String prefilledText;
+
+        public FieldText(String name, String prefill) {
+            this.fieldName = name;
+            this.prefilledText = prefill;
+        }
+    }
+
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Field {

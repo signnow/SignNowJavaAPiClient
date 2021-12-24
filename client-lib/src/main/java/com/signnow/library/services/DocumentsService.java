@@ -73,6 +73,16 @@ public class DocumentsService extends ApiService implements Documents {
     }
 
     @Override
+    public void prefillText(String documentId, List<Document.FieldText> request) throws SNException {
+        client.put(
+                "/v2/documents/{documentId}/prefill-texts",
+                Collections.singletonMap("documentId", documentId),
+                new Document.PrefillTextRequest(request),
+                String.class
+        );
+    }
+
+    @Override
     public void updateDocumentFields(String documentId, List<Document.Field> request) throws SNException {
         client.put(
                 "/document/{documentId}",
@@ -109,4 +119,5 @@ public class DocumentsService extends ApiService implements Documents {
                 Document.DocumentDownloadLink.class
         ).link;
     }
+
 }
