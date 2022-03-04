@@ -14,7 +14,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DocumentsService extends ApiService implements Documents {
     public DocumentsService(SNClient client) {
@@ -70,6 +72,26 @@ public class DocumentsService extends ApiService implements Documents {
                 request,
                 String.class
         );
+    }
+
+    @Override
+    public Document.SigningEmbeddedInviteResponse createDocumentEmbeddedSignInvite(String documentId, Document.SigningEmbeddedInviteRequest request) throws SNException {
+        return client.post(
+                "/v2/documents/{document_id}/embedded-invites",
+                Collections.singletonMap("document_id", documentId),
+                request,
+                Document.SigningEmbeddedInviteResponse.class);
+    }
+
+    @Override
+    public String getDocumentEmbeddedSignInviteLink(String documentId, String inviteId, Document.GettingEmbeddedInviteLinkRequest request) throws SNException {
+        Map<String, String> params = new HashMap<>();
+        params.put("document_id", documentId);
+        params.put("fieldInviteUniqueId", inviteId);
+        Document.GettingEmbeddedInviteLinkResponse response = client.post(
+                "/v2/documents/{document_id}/embedded-invites/{fieldInviteUniqueId}/link",
+                params, request, Document.GettingEmbeddedInviteLinkResponse.class);
+        return response.getLink();
     }
 
     @Override

@@ -2,8 +2,7 @@ package com.signnow.library.dto;
 
 import com.fasterxml.jackson.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Document extends GenericId {
@@ -197,4 +196,64 @@ public class Document extends GenericId {
         public String link;
     }
 
+    /*------------------------Embedded invites------------------------*/
+    public static class SigningEmbeddedInviteRequest {
+        public final List<EmbeddedInvite> invites = new ArrayList<>();
+
+        public SigningEmbeddedInviteRequest(EmbeddedInvite... invite) {
+            this.invites.addAll(Arrays.asList(invite));
+        }
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class EmbeddedInvite {
+        public String email;
+        public String role_id = "";
+        public String role;
+        public int order = 1;
+        @JsonProperty("auth_method")
+        public String authMethod = "none";
+
+        public EmbeddedInvite(String email, String role) {
+            this.email = email;
+            this.role = role;
+        }
+    }
+
+    public static class SigningEmbeddedInviteResponse {
+        public final List<InviteResponseData> data = new ArrayList<>();
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class InviteResponseData {
+        public final String id;
+        public final String email;
+        @JsonProperty("role_id")
+        public final String roleId;
+        public final int order;
+        public final String status;
+
+        public InviteResponseData(String id, String email, String roleId, int order, String status) {
+            this.id = id;
+            this.email = email;
+            this.roleId = roleId;
+            this.order = order;
+            this.status = status;
+        }
+    }
+
+    public static class GettingEmbeddedInviteLinkRequest {
+        @JsonProperty("link_expiration")
+        public int linkExpiration = 45;
+        @JsonProperty("auth_method")
+        public String authMethod = "none";
+    }
+
+    public static class GettingEmbeddedInviteLinkResponse {
+       public final Map<String, String> data = new HashMap<>();
+
+        public String getLink() {
+            return data.get("link");
+        }
+    }
 }

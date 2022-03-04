@@ -22,10 +22,13 @@ public interface Documents {
 
     void sendDocumentSignInvite(String documentId, Document.SigningInviteWithRolesRequest request) throws SNException;
 
+    Document.SigningEmbeddedInviteResponse createDocumentEmbeddedSignInvite(String documentId, Document.SigningEmbeddedInviteRequest request) throws SNException;
+
+    String getDocumentEmbeddedSignInviteLink(String documentId, String inviteId, Document.GettingEmbeddedInviteLinkRequest request) throws SNException;
+
     void updateDocumentFields(String documentId, List<Document.Field> request) throws SNException;
 
     void prefillText(String documentId, List<Document.FieldText> request) throws SNException;
-
 
     Document getDocument(String documentId) throws SNException;
 
