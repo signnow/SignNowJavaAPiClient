@@ -75,22 +75,22 @@ public class DocumentsService extends ApiService implements Documents {
     }
 
     @Override
-    public Document.SigningEmbeddedInviteResponse createDocumentEmbeddedSignInvite(String documentId, Document.SigningEmbeddedInviteRequest request) throws SNException {
+    public Document.EmbeddedSigningInviteResponse createDocumentEmbeddedSignInvite(String documentId, Document.EmbeddedSigningInviteRequest request) throws SNException {
         return client.post(
                 "/v2/documents/{document_id}/embedded-invites",
                 Collections.singletonMap("document_id", documentId),
                 request,
-                Document.SigningEmbeddedInviteResponse.class);
+                Document.EmbeddedSigningInviteResponse.class);
     }
 
     @Override
-    public String getDocumentEmbeddedSignInviteLink(String documentId, String inviteId, Document.GettingEmbeddedInviteLinkRequest request) throws SNException {
+    public String getDocumentEmbeddedSignInviteLink(String documentId, String inviteId, Document.EmbeddedInviteLinkRequest request) throws SNException {
         Map<String, String> params = new HashMap<>();
         params.put("document_id", documentId);
         params.put("fieldInviteUniqueId", inviteId);
-        Document.GettingEmbeddedInviteLinkResponse response = client.post(
+        Document.EmbeddedInviteLinkResponse response = client.post(
                 "/v2/documents/{document_id}/embedded-invites/{fieldInviteUniqueId}/link",
-                params, request, Document.GettingEmbeddedInviteLinkResponse.class);
+                params, request, Document.EmbeddedInviteLinkResponse.class);
         return response.getLink();
     }
 

@@ -22,9 +22,9 @@ public interface Documents {
 
     void sendDocumentSignInvite(String documentId, Document.SigningInviteWithRolesRequest request) throws SNException;
 
-    Document.SigningEmbeddedInviteResponse createDocumentEmbeddedSignInvite(String documentId, Document.SigningEmbeddedInviteRequest request) throws SNException;
+    Document.EmbeddedSigningInviteResponse createDocumentEmbeddedSignInvite(String documentId, Document.EmbeddedSigningInviteRequest request) throws SNException;
 
-    String getDocumentEmbeddedSignInviteLink(String documentId, String inviteId, Document.GettingEmbeddedInviteLinkRequest request) throws SNException;
+    String getDocumentEmbeddedSignInviteLink(String documentId, String inviteId, Document.EmbeddedInviteLinkRequest request) throws SNException;
 
     void updateDocumentFields(String documentId, List<Document.Field> request) throws SNException;
 

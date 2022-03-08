@@ -197,10 +197,10 @@ public class Document extends GenericId {
     }
 
     /*------------------------Embedded invites------------------------*/
-    public static class SigningEmbeddedInviteRequest {
+    public static class EmbeddedSigningInviteRequest {
         public final List<EmbeddedInvite> invites = new ArrayList<>();
 
-        public SigningEmbeddedInviteRequest(EmbeddedInvite... invite) {
+        public EmbeddedSigningInviteRequest(EmbeddedInvite... invite) {
             this.invites.addAll(Arrays.asList(invite));
         }
     }
@@ -220,7 +220,7 @@ public class Document extends GenericId {
         }
     }
 
-    public static class SigningEmbeddedInviteResponse {
+    public static class EmbeddedSigningInviteResponse {
         public final List<InviteResponseData> data = new ArrayList<>();
     }
 
@@ -242,14 +242,14 @@ public class Document extends GenericId {
         }
     }
 
-    public static class GettingEmbeddedInviteLinkRequest {
+    public static class EmbeddedInviteLinkRequest {
         @JsonProperty("link_expiration")
         public int linkExpiration = 45;
         @JsonProperty("auth_method")
         public String authMethod = "none";
     }
 
-    public static class GettingEmbeddedInviteLinkResponse {
+    public static class EmbeddedInviteLinkResponse {
        public final Map<String, String> data = new HashMap<>();
 
         public String getLink() {
