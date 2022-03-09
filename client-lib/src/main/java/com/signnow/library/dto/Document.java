@@ -221,25 +221,17 @@ public class Document extends GenericId {
     }
 
     public static class EmbeddedSigningInviteResponse {
-        public final List<InviteResponseData> data = new ArrayList<>();
+        public List<InviteResponseData> data = new ArrayList<>();
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class InviteResponseData {
-        public final String id;
-        public final String email;
+        public String id;
+        public String email;
         @JsonProperty("role_id")
-        public final String roleId;
-        public final int order;
-        public final String status;
-
-        public InviteResponseData(String id, String email, String roleId, int order, String status) {
-            this.id = id;
-            this.email = email;
-            this.roleId = roleId;
-            this.order = order;
-            this.status = status;
-        }
+        public String roleId;
+        public int order;
+        public String status;
     }
 
     public static class EmbeddedInviteLinkRequest {
@@ -250,7 +242,7 @@ public class Document extends GenericId {
     }
 
     public static class EmbeddedInviteLinkResponse {
-       public final Map<String, String> data = new HashMap<>();
+        public Map<String, String> data = new HashMap<>();
 
         public String getLink() {
             return data.get("link");
