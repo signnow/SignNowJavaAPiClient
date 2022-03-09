@@ -208,7 +208,7 @@ public class Document extends GenericId {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class EmbeddedInvite {
         public String email;
-        public String role_id = "";
+        public String role_id;
         public String role;
         public int order = 1;
         @JsonProperty("auth_method")
