@@ -10,7 +10,6 @@
 
     <modules>
         <module>client-lib</module>
-        <module>example-app</module>
     </modules>
 
 </project>
