@@ -15,6 +15,7 @@
 
         <!-- External dependencies -->
         <junit.version>[5.8.2]</junit.version>
+        <mockito-core.version>[4.4.0]</mockito-core.version>
 
         <!-- Maven plugins -->
         <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
@@ -85,7 +86,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.0.0</version>
+            <version>${mockito-core.version}</version>
             <scope>test</scope>
         </dependency>
 

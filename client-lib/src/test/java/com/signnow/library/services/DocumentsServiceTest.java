@@ -7,7 +7,6 @@ import org.glassfish.jersey.client.JerseyInvocation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Matchers;
 
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
