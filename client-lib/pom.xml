@@ -16,6 +16,7 @@
         <!-- External dependencies -->
         <junit.version>[5.8.2]</junit.version>
         <mockito-core.version>[4.4.0]</mockito-core.version>
+        <jersey.version>[2.35]</jersey.version>
 
         <!-- Maven plugins -->
         <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
@@ -38,22 +39,22 @@
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>
-            <version>2.27</version>
+            <version>${jersey.version}</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
-            <version>2.27</version>
+            <version>${jersey.version}</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-multipart</artifactId>
-            <version>2.27</version>
+            <version>${jersey.version}</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
-            <version>2.27</version>
+            <version>${jersey.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.activation</groupId>
