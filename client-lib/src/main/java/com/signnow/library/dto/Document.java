@@ -175,4 +175,12 @@ public class Document extends GenericId {
         public String link;
     }
 
+    public static class MoveDocumentRequest {
+        @JsonProperty("folder_id")
+        public String folderId;
+
+        public MoveDocumentRequest(String folderId) {
+            this.folderId = folderId;
+        }
+    }
 }

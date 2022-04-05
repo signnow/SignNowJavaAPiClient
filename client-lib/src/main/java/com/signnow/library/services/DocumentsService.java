@@ -43,6 +43,16 @@ public class DocumentsService extends ApiService implements Documents {
     }
 
     @Override
+    public void moveDocument(String documentId, String folderId) throws SNException {
+        client.post(
+                "/document/{documentId}/move",
+                Collections.singletonMap("documentId", documentId),
+                new Document.MoveDocumentRequest(folderId),
+                String.class
+        );
+    }
+
+    @Override
     public List<Document> getDocuments() throws SNException {
         return client.get("/user/documentsv2", null, new GenericType<List<Document>>() {});
     }
