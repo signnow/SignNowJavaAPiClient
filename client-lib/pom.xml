@@ -32,6 +32,7 @@
         <maven-site-plugin.version>3.11.0</maven-site-plugin.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
         <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
+        <maven-shade-plugin.version>3.3.0</maven-shade-plugin.version>
         <pgpverify-maven-plugin.version>1.16.0</pgpverify-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <license-maven-plugin.version>2.0.0</license-maven-plugin.version>
@@ -42,25 +43,21 @@
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>
             <version>${jersey.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
             <version>${jersey.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-multipart</artifactId>
             <version>${jersey.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
             <version>${jersey.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- Tests -->
@@ -210,6 +207,8 @@
                     <bundleThirdPartyPath>META-INF/${project.artifactId}-THIRD-PARTY-LICENSES.txt</bundleThirdPartyPath>
                     <!-- end::add-third-party[] -->
                     <licenseMerges>
+                        <licenseMerge>The Apache Software License, Version 2.0|Apache License, 2.0</licenseMerge>
+                        <licenseMerge>The Apache Software License, Version 2.0|Apache License 2.0</licenseMerge>
                         <licenseMerge>The Apache Software License, Version 2.0|Apache License, Version 2.0</licenseMerge>
                         <licenseMerge>The Apache Software License, Version 2.0|Apache License v2.0</licenseMerge>
                         <licenseMerge>The Apache Software License, Version 2.0|Apache Public License 2.0</licenseMerge>
@@ -236,6 +235,28 @@
                         </manifest>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven-shade-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer"/>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer">
+                                    <addHeader>false</addHeader>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
