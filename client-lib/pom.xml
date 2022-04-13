@@ -32,10 +32,8 @@
         <maven-site-plugin.version>3.11.0</maven-site-plugin.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
         <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
-        <maven-shade-plugin.version>3.3.0</maven-shade-plugin.version>
         <pgpverify-maven-plugin.version>1.16.0</pgpverify-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
-        <license-maven-plugin.version>2.0.0</license-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -187,44 +185,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <version>${license-maven-plugin.version}</version>
-                <configuration>
-                    <licenseName>apache_v2</licenseName>
-                    <projectName>This file is part of ${project.name}.</projectName>
-                    <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
-                    <sectionDelimiter>%</sectionDelimiter>
-                    <processStartTag>========================LICENSE_START=================================</processStartTag>
-                    <processEndTag>=========================LICENSE_END==================================</processEndTag>
-                    <excludes>
-                        <exclude>**/*.properties</exclude>
-                    </excludes>
-                    <generateBundle>true</generateBundle>
-                    <!-- tag::add-third-party[] -->
-                    <excludedScopes>test,provided</excludedScopes>
-                    <thirdPartyFilename>THIRD-PARTY-LICENSES.txt</thirdPartyFilename>
-                    <bundleThirdPartyPath>META-INF/${project.artifactId}-THIRD-PARTY-LICENSES.txt</bundleThirdPartyPath>
-                    <!-- end::add-third-party[] -->
-                    <licenseMerges>
-                        <licenseMerge>The Apache Software License, Version 2.0|Apache License, 2.0</licenseMerge>
-                        <licenseMerge>The Apache Software License, Version 2.0|Apache License 2.0</licenseMerge>
-                        <licenseMerge>The Apache Software License, Version 2.0|Apache License, Version 2.0</licenseMerge>
-                        <licenseMerge>The Apache Software License, Version 2.0|Apache License v2.0</licenseMerge>
-                        <licenseMerge>The Apache Software License, Version 2.0|Apache Public License 2.0</licenseMerge>
-                    </licenseMerges>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>add-third-party-licenses</id>
-                        <phase>process-sources</phase>
-                        <goals>
-                            <goal>add-third-party</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
@@ -235,28 +195,6 @@
                         </manifest>
                     </archive>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>${maven-shade-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer"/>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer">
-                                    <addHeader>false</addHeader>
-                                </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
