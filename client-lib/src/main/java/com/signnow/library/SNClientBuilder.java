@@ -165,7 +165,7 @@ public class SNClientBuilder {
             if (response.getStatus() >= 400) {
                 throw new SNAuthException(response.readEntity(Errors.class).errorList.get(0).message);
             } else {
-                return response.readEntity(User.UserCreateResponce.class).id;
+                return response.readEntity(User.UserCreateResponse.class).id;
             }
         } catch (SNAuthException e) {
             throw e;

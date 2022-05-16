@@ -97,7 +97,7 @@ public class User {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class UserCreateResponce {
+    public static class UserCreateResponse {
         public String id;
         public boolean verified;
         public String email;
