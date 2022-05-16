@@ -1,5 +1,6 @@
 package com.signnow.library.services;
 
+import com.signnow.library.Constants;
 import com.signnow.library.SNClient;
 import com.signnow.library.dto.DocumentGroup;
 import com.signnow.library.dto.GenericId;
@@ -63,7 +64,7 @@ public class DocumentGroupsService extends ApiService implements DocumentGroups 
     public void deleteDocumentGroup(String documentGroupId) throws SNException {
         client.delete(
                 "/documentgroup/{documentGroupId}",
-                Collections.singletonMap("documentGroupId", documentGroupId),
+                Collections.singletonMap(Constants.DOCUMENT_GROUP_ID, documentGroupId),
                 String.class
         );
     }
@@ -72,7 +73,7 @@ public class DocumentGroupsService extends ApiService implements DocumentGroups 
     public String createDocumentGroupInvite(String documentGroupId, GroupInvite groupInvite) throws SNException {
         return client.post(
                 "/documentgroup/{documentGroupId}/groupinvite",
-                Collections.singletonMap("documentGroupId", documentGroupId),
+                Collections.singletonMap(Constants.DOCUMENT_GROUP_ID, documentGroupId),
                 groupInvite,
                 GenericId.class
         ).id;
@@ -81,7 +82,7 @@ public class DocumentGroupsService extends ApiService implements DocumentGroups 
     @Override
     public void resendInvites(String documentGroupId, String inviteId, String email) throws SNException {
         Map<String, String> params = new HashMap<>();
-        params.put("documentGroupId", documentGroupId);
+        params.put(Constants.DOCUMENT_GROUP_ID, documentGroupId);
         params.put("inviteId", inviteId);
 
         client.post(
