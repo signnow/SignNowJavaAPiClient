@@ -85,7 +85,7 @@ public class DocumentsService extends ApiService implements Documents {
     @Override
     public void updateDocumentFields(String documentId, List<Document.Field> request) throws SNException {
         client.put(
-                "/document/{documentId}",
+                Constants.PATH_TO_DOCUMENT_ID,
                 Collections.singletonMap(Constants.DOCUMENT_ID, documentId),
                 new Document.FieldsUpdateRequest(request),
                 String.class
@@ -95,7 +95,7 @@ public class DocumentsService extends ApiService implements Documents {
     @Override
     public Document getDocument(String documentId) throws SNException {
         return client.get(
-                "/document/{documentId}",
+                Constants.PATH_TO_DOCUMENT_ID,
                 Collections.singletonMap(Constants.DOCUMENT_ID, documentId),
                 Document.class
         );
@@ -104,7 +104,7 @@ public class DocumentsService extends ApiService implements Documents {
     @Override
     public void deleteDocument(String documentId) throws SNException {
         client.delete(
-                "/document/{documentId}",
+                Constants.PATH_TO_DOCUMENT_ID,
                 Collections.singletonMap(Constants.DOCUMENT_ID, documentId),
                 String.class
         );
