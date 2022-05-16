@@ -23,9 +23,11 @@ public class DocumentGroupsService extends ApiService implements DocumentGroups 
 
     @Override
     public DocumentGroup getDocumentGroup(String documentGroupId) throws SNException {
-        return client.get("/documentgroup/{documentgroupId}",
-                Collections.singletonMap("documentgroupId", documentGroupId),
-                DocumentGroup.class);
+        return client.get(
+                "/documentgroup/{documentGroupId}",
+                Collections.singletonMap(Constants.DOCUMENT_GROUP_ID, documentGroupId),
+                DocumentGroup.class
+        );
     }
 
     @Override
