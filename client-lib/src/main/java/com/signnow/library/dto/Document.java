@@ -79,9 +79,9 @@ public class Document extends GenericId {
     @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class InviteRole {
         public final String email;
-        @JsonProperty("role_id")
-        public final String roleId = "";
         public final String role;
+        @JsonProperty("role_id")
+        public String roleId = "";
         public Integer order = 1;
         public String password;
         @JsonProperty("expiration_days")
