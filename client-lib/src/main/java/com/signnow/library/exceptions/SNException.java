@@ -1,13 +1,13 @@
 package com.signnow.library.exceptions;
 
 public abstract class SNException extends Exception {
-    public SNException() {}
+    protected SNException() {}
 
-    public SNException(String message) {
+    protected SNException(String message) {
         super(message);
     }
 
-    public SNException(String message, Throwable cause) {
+    protected SNException(String message, Throwable cause) {
         super(message, cause);
     }
 }
