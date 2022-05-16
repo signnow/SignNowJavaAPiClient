@@ -181,7 +181,6 @@ public class SNClientBuilder {
         } catch (SNAuthException e) {
             throw e;
         } catch (Exception e) {
-            e.printStackTrace();
             throw new SNAuthException(e.getMessage(), e);
         }
     }
