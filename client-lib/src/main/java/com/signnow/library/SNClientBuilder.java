@@ -68,7 +68,7 @@ public class SNClientBuilder {
         this.apiUrl = apiUrl;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
-        this.basicAuthHeader = "Basic "+ encodeClientCredentials(clientId, clientSecret);
+        this.basicAuthHeader = "Basic " + encodeClientCredentials(clientId, clientSecret);
         basicClient = ClientBuilder.newClient().register(MultiPartFeature.class);
         snApiUrl = basicClient.target(apiUrl);
     }
