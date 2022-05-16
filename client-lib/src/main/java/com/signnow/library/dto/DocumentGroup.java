@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@SuppressWarnings("java:S1104")  // field name equal to JsonProperty
 public class DocumentGroup extends GenericId {
     @JsonProperty("group_name")
     public String groupName;
@@ -23,6 +24,7 @@ public class DocumentGroup extends GenericId {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class DocumentInfo extends GenericId {
         public List<String> roles = new ArrayList<>();
         public String documentName;
