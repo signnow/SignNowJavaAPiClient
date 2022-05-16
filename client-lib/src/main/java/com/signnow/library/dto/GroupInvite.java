@@ -12,7 +12,7 @@ public class GroupInvite {
     @JsonProperty("invite_steps")
     public List<InviteStep> inviteSteps = new ArrayList<>();
     @JsonProperty("completion_emails")
-    public List<Email> completionEmails = new ArrayList<>();
+    public List<InviteEmail> completionEmails = new ArrayList<>();
 
     public enum ActionType {
         SIGN("sign"),
@@ -40,7 +40,7 @@ public class GroupInvite {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Email {
+    public static class InviteEmail {
         public String email;
         public String subject;
         public String message;
@@ -63,7 +63,7 @@ public class GroupInvite {
     public static class InviteStep {
         public Integer order;
         @JsonProperty("invite_emails")
-        public List<Email> inviteEmails = new ArrayList<>();
+        public List<InviteEmail> inviteEmails = new ArrayList<>();
         @JsonProperty("invite_actions")
         public List<InviteAction> inviteActions = new ArrayList<>();
     }
