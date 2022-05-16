@@ -76,8 +76,10 @@ public class Document extends GenericId {
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class InviteRole {
         public final String email;
+        @JsonProperty("role_id")
         public final String roleId = "";
         public final String role;
         public Integer order = 1;
