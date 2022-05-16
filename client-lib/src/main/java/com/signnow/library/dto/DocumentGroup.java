@@ -26,6 +26,7 @@ public class DocumentGroup extends GenericId {
     public static class DocumentInfo extends GenericId {
         public List<String> roles = new ArrayList<>();
         public String documentName;
+        public String name;
 
         @JsonSetter("document_name")
         public void setDocumentName(String documentName) {
@@ -34,7 +35,7 @@ public class DocumentGroup extends GenericId {
 
         @JsonSetter("name")
         public void setName(String name) {
-            this.documentName = documentName;
+            this.name = name;
         }
     }
 
