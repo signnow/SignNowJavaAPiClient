@@ -140,24 +140,17 @@ public class Document extends GenericId {
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class Field {
-        @JsonProperty("x")
         public int x;
-        @JsonProperty("y")
         public int y;
-        @JsonProperty("width")
         public int width;
-        @JsonProperty("height")
         public int height;
         @JsonProperty("page_number")
         public int pageNumber;
-        @JsonProperty("role")
         public String role;
-        @JsonProperty("required")
         public boolean required;
-        @JsonProperty("type")
         public FieldType type;
-        @JsonProperty("label")
         public String label;
         @JsonProperty("prefilled_text")
         public String prefilledText;
