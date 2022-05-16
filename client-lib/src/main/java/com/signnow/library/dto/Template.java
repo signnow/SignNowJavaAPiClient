@@ -7,11 +7,11 @@ public class Template {
         @JsonProperty("document_name")
         public final String templateName;
         @JsonProperty("document_id")
-        public final String sourceDocmentId;
+        public final String sourceDocumentId;
 
-        public CreateRequest(String templateName, String sourceDocmentId) {
+        public CreateRequest(String templateName, String sourceDocumentId) {
             this.templateName = templateName;
-            this.sourceDocmentId = sourceDocmentId;
+            this.sourceDocumentId = sourceDocumentId;
         }
     }
 
