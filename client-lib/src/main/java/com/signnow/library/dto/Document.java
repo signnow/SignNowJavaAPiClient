@@ -29,6 +29,7 @@ public class Document extends GenericId {
     /**
      * Free form invites info
      */
+    @JsonProperty("requests")
     public List<DocumentSignRequestInfo> requests;
 
     public static class SigningLinkRequest {
