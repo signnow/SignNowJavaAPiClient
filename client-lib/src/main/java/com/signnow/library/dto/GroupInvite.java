@@ -55,8 +55,8 @@ public class GroupInvite {
         public String subject;
         public String message;
         @JsonProperty("expiration_days")
-        public int expirationDays;
-        public int reminder;
+        public Integer expirationDays;
+        public Integer reminder;
 
         @JsonGetter("disabled")
         public int isDisabled() {
