@@ -115,7 +115,7 @@ public class SNClientBuilder {
                 .header(Constants.AUTHORIZATION, basicAuthHeader)
                 .post(Entity.entity(authForm, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
         if (response.getStatus() >= 500) {
-            throw new SNAuthException(response.readEntity(Errors.class).errors.stream()
+            throw new SNAuthException(response.readEntity(Errors.class).errorList.stream()
                     .map(err -> err.code + ": " + err.message)
                     .collect(Collectors.joining("\n")));
         } else if (response.getStatus() >= 400) {
@@ -163,7 +163,7 @@ public class SNClientBuilder {
                     .header(Constants.AUTHORIZATION, basicAuthHeader)
                     .post(Entity.entity(new User.UserCreateRequest(email, password), defaultVariant));
             if (response.getStatus() >= 400) {
-                throw new SNAuthException(response.readEntity(Errors.class).errors.get(0).message);
+                throw new SNAuthException(response.readEntity(Errors.class).errorList.get(0).message);
             } else {
                 return response.readEntity(User.UserCreateResponce.class).id;
             }
