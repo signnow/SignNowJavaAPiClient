@@ -39,6 +39,7 @@ public class GroupInvite {
         }
     }
 
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class InviteStep {
         public Integer order;
         @JsonProperty("invite_emails")
