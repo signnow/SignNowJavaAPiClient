@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@SuppressWarnings("java:S1104")  // field name equal to JsonProperty
 public class Document extends GenericId {
     @JsonProperty("user_id")
     public String userId;
@@ -13,9 +14,7 @@ public class Document extends GenericId {
     public String documentName;
     @JsonProperty("page_count")
     public String pageCount;
-    @JsonProperty("created")
     public String created;
-    @JsonProperty("updated")
     public String updated;
     @JsonProperty("original_filename")
     public String originalFilename;
@@ -29,7 +28,6 @@ public class Document extends GenericId {
     /**
      * Free form invites info
      */
-    @JsonProperty("requests")
     public List<DocumentSignRequestInfo> requests;
 
     public static class SigningLinkRequest {
