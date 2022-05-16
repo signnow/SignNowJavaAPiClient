@@ -8,9 +8,9 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Document extends GenericId {
     @JsonProperty("user_id")
-    public String user_id;
+    public String userId;
     @JsonProperty("document_name")
-    public String document_name;
+    public String documentName;
     @JsonProperty("page_count")
     public String pageCount;
     public String created;
