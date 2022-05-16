@@ -22,8 +22,7 @@ import java.util.stream.Collectors;
 
 public class SNClientBuilder {
 
-    private String basicAuthHeader;
-    private Client basicClient;
+    private final String basicAuthHeader;
     private WebTarget snApiUrl;
     private static volatile SNClientBuilder instance;
     protected final static Variant defaultVariant = new Variant(
@@ -63,7 +62,7 @@ public class SNClientBuilder {
 
     private SNClientBuilder(String apiUrl, String clientId, String clientSecret) {
         this.basicAuthHeader = "Basic " + encodeClientCredentials(clientId, clientSecret);
-        basicClient = ClientBuilder.newClient().register(MultiPartFeature.class);
+        Client basicClient = ClientBuilder.newClient().register(MultiPartFeature.class);
         snApiUrl = basicClient.target(apiUrl);
     }
 
