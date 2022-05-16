@@ -42,13 +42,14 @@ public class Document extends GenericId {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class SigningLinkResponse {
-        @JsonProperty("url")
         public String url;
         @JsonProperty("url_no_signup")
         public String urlNoSignup;
     }
 
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class SigningInviteRequest {
         public final String from;
         public final String to;
@@ -62,6 +63,7 @@ public class Document extends GenericId {
         }
     }
 
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class SigningInviteWithRolesRequest {
         public final String from;
         public final List<InviteRole> to;
