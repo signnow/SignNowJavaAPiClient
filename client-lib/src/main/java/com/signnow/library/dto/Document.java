@@ -74,7 +74,7 @@ public class Document extends GenericId {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class InviteRole {
         public final String email;
-        public final String role_id = "";
+        public final String roleId = "";
         public final String role;
         public Integer order = 1;
         public String password;
