@@ -183,6 +183,7 @@ public class Document extends GenericId {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class DocumentDownloadLink {
         public String link;
     }
