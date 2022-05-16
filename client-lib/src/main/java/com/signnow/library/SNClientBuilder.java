@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class SNClientBuilder {
 
     private final String basicAuthHeader;
-    private WebTarget snApiUrl;
+    private final WebTarget snApiUrl;
     private static volatile SNClientBuilder instance;
     protected final static Variant defaultVariant = new Variant(
             MediaType.APPLICATION_JSON_TYPE,
