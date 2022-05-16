@@ -136,7 +136,6 @@ public class SNClientBuilder {
         try {
             cli.checkAuth();
         } catch (SNAuthException e) {
-            System.out.println("AUTH: " + e.getAuthError() + ", " + e.getMessage());
             if (e.getAuthError() == AuthError.Type.INVALID_TOKEN) {
                 try {
                     refreshToken(user);
