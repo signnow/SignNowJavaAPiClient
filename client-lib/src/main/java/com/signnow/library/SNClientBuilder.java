@@ -139,10 +139,7 @@ public class SNClientBuilder {
      * @throws SNAuthException
      */
     public SNClient getClientForAuthenticatedUser(User user) throws SNAuthException {
-        SNClient cli = new SNClient(
-                snApiUrl,
-                user
-        );
+        SNClient cli = new SNClient(snApiUrl, user);
         try {
             cli.checkAuth();
         } catch (SNAuthException e) {
@@ -184,5 +181,4 @@ public class SNClientBuilder {
             throw new SNAuthException(e.getMessage(), e);
         }
     }
-
 }
