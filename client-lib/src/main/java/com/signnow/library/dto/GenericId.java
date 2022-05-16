@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@SuppressWarnings("java:S1104")  // field name equal to JsonProperty
 public class GenericId {
-    @JsonProperty("id")
     public String id;
 
     @JsonIgnore
