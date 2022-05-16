@@ -32,11 +32,11 @@ public class SNClient implements ServiceProvider {
             + " (" + CLIENT_INFO + ") "
             + System.getProperty("java.vendor") + "/" + System.getProperty("java.version");
 
-    private User user;
-    private WebTarget apiWebTarget;
-    private Documents documentsService = new DocumentsService(this);
-    private Templates templatesService = new TemplatesService(this);
-    private DocumentGroups documentGroupsService = new DocumentGroupsService(this);
+    private final User user;
+    private final WebTarget apiWebTarget;
+    private final Documents documentsService = new DocumentsService(this);
+    private final Templates templatesService = new TemplatesService(this);
+    private final DocumentGroups documentGroupsService = new DocumentGroupsService(this);
 
     protected SNClient(WebTarget apiWebTarget, User user) {
         this.apiWebTarget = apiWebTarget;
