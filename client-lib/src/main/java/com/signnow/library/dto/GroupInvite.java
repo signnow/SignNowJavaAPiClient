@@ -72,6 +72,7 @@ public class GroupInvite {
         }
     }
 
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class InviteAction {
         public String email;
         @JsonProperty("role_name")
@@ -95,6 +96,7 @@ public class GroupInvite {
         }
     }
 
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class InviteAuthentication {
         public String type;
         public String value;
