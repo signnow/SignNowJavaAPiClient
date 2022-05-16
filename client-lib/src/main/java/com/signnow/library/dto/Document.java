@@ -13,7 +13,9 @@ public class Document extends GenericId {
     public String documentName;
     @JsonProperty("page_count")
     public String pageCount;
+    @JsonProperty("created")
     public String created;
+    @JsonProperty("updated")
     public String updated;
     @JsonProperty("original_filename")
     public String originalFilename;
