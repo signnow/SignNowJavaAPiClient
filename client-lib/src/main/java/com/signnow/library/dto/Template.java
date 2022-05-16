@@ -23,4 +23,8 @@ public class Template {
             this.newDocumentName = newDocumentName;
         }
     }
+
+    private Template() {
+        throw new IllegalStateException("Utility class");
+    }
 }
