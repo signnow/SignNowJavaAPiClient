@@ -113,12 +113,12 @@ public class SNClient implements ServiceProvider {
     private Invocation.Builder buildRequest(String path, Map<String, String> parameters) {
         WebTarget target = apiWebTarget.path(path);
         if (parameters != null) {
-            for (String key : parameters.keySet()){
-                WebTarget targetUpd = target.resolveTemplate(key, parameters.get(key));
+            for (Map.Entry<String, String> entry : parameters.entrySet()){
+                WebTarget targetUpd = target.resolveTemplate(entry.getKey(), entry.getValue());
                 if (!targetUpd.toString().equals(target.toString())) {
                     target = targetUpd;
                 } else {
-                    target = target.queryParam(key, parameters.get(key));
+                    target = target.queryParam(entry.getKey(), entry.getValue());
                 }
             }
         }
