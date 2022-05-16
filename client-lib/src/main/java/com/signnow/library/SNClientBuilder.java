@@ -25,7 +25,7 @@ public class SNClientBuilder {
     private final String basicAuthHeader;
     private final WebTarget snApiUrl;
     private static volatile SNClientBuilder instance;
-    protected final static Variant defaultVariant = new Variant(
+    protected static final Variant defaultVariant = new Variant(
             MediaType.APPLICATION_JSON_TYPE,
             Locale.getDefault(),
             StandardCharsets.UTF_8.name()
