@@ -52,7 +52,7 @@ public class DocumentGroup extends GenericId {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class DocumentGroupsListResponce {
+    public static class DocumentGroupsListResponse {
         @JsonProperty("document_groups")
         public List<DocumentGroup> documentGroups;
         @JsonProperty("document_group_total_count")

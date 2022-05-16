@@ -41,7 +41,7 @@ public class DocumentGroupsService extends ApiService implements DocumentGroups 
     }
 
     @Override
-    public DocumentGroup.DocumentGroupsListResponce getUserDocumentGroups(Integer limit, Integer offset) throws SNException {
+    public DocumentGroup.DocumentGroupsListResponse getUserDocumentGroups(Integer limit, Integer offset) throws SNException {
         Map<String, String> params = new HashMap<>();
         if (limit != null) {
             if (limit <= 0) {
@@ -59,7 +59,7 @@ public class DocumentGroupsService extends ApiService implements DocumentGroups 
                 params.put("offset", offset.toString());
             }
         }
-        return client.get("/user/documentgroups", params, DocumentGroup.DocumentGroupsListResponce.class);
+        return client.get("/user/documentgroups", params, DocumentGroup.DocumentGroupsListResponse.class);
     }
 
     @Override

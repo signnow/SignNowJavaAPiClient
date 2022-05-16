@@ -80,14 +80,14 @@ class DocumentGroupsServiceTest extends CommonServiceTestCase {
         final String path = "/user/documentgroups";
         when(clientMock.get(eq(path)
                 , anyMap()
-                , eq(DocumentGroup.DocumentGroupsListResponce.class)))
+                , eq(DocumentGroup.DocumentGroupsListResponse.class)))
                 .thenReturn(null);
 
         service.getUserDocumentGroups(5, 5);
 
         verify(clientMock, times(1)).get(eq(path)
                 , anyMap()
-                , eq(DocumentGroup.DocumentGroupsListResponce.class));
+                , eq(DocumentGroup.DocumentGroupsListResponse.class));
     }
 
     @Test
