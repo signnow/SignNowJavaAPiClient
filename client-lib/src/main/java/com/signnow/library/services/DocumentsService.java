@@ -46,7 +46,7 @@ public class DocumentsService extends ApiService implements Documents {
     public void moveDocument(String documentId, String folderId) throws SNException {
         client.post(
                 "/document/{documentId}/move",
-                Collections.singletonMap("documentId", documentId),
+                Collections.singletonMap(Constants.DOCUMENT_ID, documentId),
                 new Document.MoveDocumentRequest(folderId),
                 String.class
         );
@@ -66,7 +66,7 @@ public class DocumentsService extends ApiService implements Documents {
     public void sendDocumentSignInvite(String documentId, Document.SigningInviteRequest request) throws SNException {
         client.post(
                 "/document/{documentId}/invite",
-                Collections.singletonMap("documentId", documentId),
+                Collections.singletonMap(Constants.DOCUMENT_ID, documentId),
                 request,
                 String.class
         );
@@ -76,7 +76,7 @@ public class DocumentsService extends ApiService implements Documents {
     public void sendDocumentSignInvite(String documentId, Document.SigningInviteWithRolesRequest request) throws SNException {
         client.post(
                 "/document/{documentId}/invite",
-                Collections.singletonMap("documentId", documentId),
+                Collections.singletonMap(Constants.DOCUMENT_ID, documentId),
                 request,
                 String.class
         );
@@ -86,7 +86,7 @@ public class DocumentsService extends ApiService implements Documents {
     public void updateDocumentFields(String documentId, List<Document.Field> request) throws SNException {
         client.put(
                 "/document/{documentId}",
-                Collections.singletonMap("documentId", documentId),
+                Collections.singletonMap(Constants.DOCUMENT_ID, documentId),
                 new Document.FieldsUpdateRequest(request),
                 String.class
         );
@@ -96,7 +96,7 @@ public class DocumentsService extends ApiService implements Documents {
     public Document getDocument(String documentId) throws SNException {
         return client.get(
                 "/document/{documentId}",
-                Collections.singletonMap("documentId", documentId),
+                Collections.singletonMap(Constants.DOCUMENT_ID, documentId),
                 Document.class
         );
     }
@@ -105,7 +105,7 @@ public class DocumentsService extends ApiService implements Documents {
     public void deleteDocument(String documentId) throws SNException {
         client.delete(
                 "/document/{documentId}",
-                Collections.singletonMap("documentId", documentId),
+                Collections.singletonMap(Constants.DOCUMENT_ID, documentId),
                 String.class
         );
     }
@@ -114,7 +114,7 @@ public class DocumentsService extends ApiService implements Documents {
     public String getDownloadLink(String documentId) throws SNException {
         return client.post(
                 "/document/{documentId}/download/link",
-                Collections.singletonMap("documentId", documentId),
+                Collections.singletonMap(Constants.DOCUMENT_ID, documentId),
                 null,
                 Document.DocumentDownloadLink.class
         ).link;
