@@ -187,6 +187,7 @@ public class Document extends GenericId {
         public String link;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class MoveDocumentRequest {
         @JsonProperty("folder_id")
         public String folderId;
