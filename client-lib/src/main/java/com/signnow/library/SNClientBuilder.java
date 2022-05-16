@@ -96,13 +96,9 @@ public class SNClientBuilder {
             User.UserAuthResponce authData = response.readEntity(User.UserAuthResponce.class);
             user = new User(email, authData.token, authData.refreshToken);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new SNAuthException(e.getMessage(), e);
         }
-        return new SNClient(
-                snApiUrl,
-                user
-        );
+        return new SNClient(snApiUrl, user);
     }
 
     protected void refreshToken(User user) throws SNException {
