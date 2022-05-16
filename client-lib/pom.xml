@@ -17,7 +17,7 @@
 
         <!-- External dependencies -->
         <junit.version>[5.8.2]</junit.version>
-        <mockito-core.version>[4.4.0]</mockito-core.version>
+        <mockito-core.version>[4.5.1]</mockito-core.version>
         <jersey.version>[2.35]</jersey.version>
 
         <!-- Maven plugins -->
