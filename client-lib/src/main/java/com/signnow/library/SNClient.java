@@ -127,8 +127,8 @@ public class SNClient implements ServiceProvider {
                 .header("User-Agent", USER_AGENT);
     }
 
-    public User.UserAuthResponce checkAuth() throws SNException {
-        return get("oauth2/token", null, User.UserAuthResponce.class);
+    public User.UserAuthResponse checkAuth() throws SNException {
+        return get("oauth2/token", null, User.UserAuthResponse.class);
     }
 
     public void refreshToken() throws SNException {

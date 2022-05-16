@@ -64,7 +64,7 @@ public class User {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class UserAuthResponce {
+    public static class UserAuthResponse {
         @JsonProperty("access_token")
         public String token;
         @JsonProperty("refresh_token")

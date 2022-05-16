@@ -86,7 +86,7 @@ public class SNClientBuilder {
                     .param("password", password)
                     .param("scope", "*");
             Response response = getOAuthRequest(authForm);
-            User.UserAuthResponce authData = response.readEntity(User.UserAuthResponce.class);
+            User.UserAuthResponse authData = response.readEntity(User.UserAuthResponse.class);
             user = new User(email, authData.token, authData.refreshToken);
         } catch (Exception e) {
             throw new SNAuthException(e.getMessage(), e);
@@ -101,7 +101,7 @@ public class SNClientBuilder {
                     .param("refresh_token", user.getRefreshToken())
                     .param("scope", "*");
             Response response = getOAuthRequest(authForm);
-            User.UserAuthResponce auth = response.readEntity(User.UserAuthResponce.class);
+            User.UserAuthResponse auth = response.readEntity(User.UserAuthResponse.class);
             user.setToken(auth.token);
             user.setRefreshToken(auth.refreshToken);
         } catch (Exception e) {
