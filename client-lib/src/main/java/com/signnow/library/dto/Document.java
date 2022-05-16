@@ -39,7 +39,7 @@ public class Document extends GenericId {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class SigningLinkResponce {
+    public static class SigningLinkResponse {
         public String url;
         @JsonProperty("url_no_signup")
         public String urlNoSignup;

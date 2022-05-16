@@ -58,8 +58,8 @@ public class DocumentsService extends ApiService implements Documents {
     }
 
     @Override
-    public Document.SigningLinkResponce createSigningLink(String documentId) throws SNException {
-        return client.post("/link", null, new Document.SigningLinkRequest(documentId), Document.SigningLinkResponce.class);
+    public Document.SigningLinkResponse createSigningLink(String documentId) throws SNException {
+        return client.post("/link", null, new Document.SigningLinkRequest(documentId), Document.SigningLinkResponse.class);
     }
 
     @Override

@@ -18,7 +18,7 @@ public interface Documents {
 
     List<Document> getDocuments() throws SNException;
 
-    Document.SigningLinkResponce createSigningLink(String documentId) throws SNException;
+    Document.SigningLinkResponse createSigningLink(String documentId) throws SNException;
 
     void sendDocumentSignInvite(String documentId, Document.SigningInviteRequest request) throws SNException;
 

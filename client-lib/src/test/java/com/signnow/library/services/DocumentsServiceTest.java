@@ -77,21 +77,21 @@ class DocumentsServiceTest extends CommonServiceTestCase {
 
     @Test
     void createSigningLink() throws SNException {
-        final Document.SigningLinkResponce responseMock = mock(Document.SigningLinkResponce.class);
+        final Document.SigningLinkResponse responseMock = mock(Document.SigningLinkResponse.class);
 
         when(clientMock.post(anyString()
                 , eq(null)
                 , any(Document.SigningLinkRequest.class)
-                , eq(Document.SigningLinkResponce.class))
+                , eq(Document.SigningLinkResponse.class))
         ).thenReturn(responseMock);
 
-        final Document.SigningLinkResponce signingLink = service.createSigningLink("1");
+        final Document.SigningLinkResponse signingLink = service.createSigningLink("1");
 
         assertEquals(responseMock, signingLink);
         verify(clientMock, times(1)).post(anyString()
                 , eq(null)
                 , any(Document.SigningLinkRequest.class)
-                , eq(Document.SigningLinkResponce.class));
+                , eq(Document.SigningLinkResponse.class));
     }
 
     @Test
