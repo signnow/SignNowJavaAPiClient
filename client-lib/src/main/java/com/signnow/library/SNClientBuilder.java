@@ -87,7 +87,7 @@ public class SNClientBuilder {
                     .param("scope", "*");
             Response response = getOAuthRequest(authForm);
             User.UserAuthResponse authData = response.readEntity(User.UserAuthResponse.class);
-            user = new User(email, authData.token, authData.refreshToken);
+            user = new User(email, authData.accessToken, authData.refreshToken);
         } catch (Exception e) {
             throw new SNAuthException(e.getMessage(), e);
         }
@@ -102,7 +102,7 @@ public class SNClientBuilder {
                     .param("scope", "*");
             Response response = getOAuthRequest(authForm);
             User.UserAuthResponse auth = response.readEntity(User.UserAuthResponse.class);
-            user.setToken(auth.token);
+            user.setToken(auth.accessToken);
             user.setRefreshToken(auth.refreshToken);
         } catch (Exception e) {
             throw new SNException(e.getMessage(), e) {};

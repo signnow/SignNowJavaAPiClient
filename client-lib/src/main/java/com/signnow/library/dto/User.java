@@ -65,14 +65,17 @@ public class User {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class UserAuthResponse {
-        @JsonProperty("access_token")
-        public String token;
-        @JsonProperty("refresh_token")
-        public String refreshToken;
         @JsonProperty("expires_in")
         public String expiresIn;
+        @JsonProperty("token_type")
+        public String tokenType;
+        @JsonProperty("access_token")
+        public String accessToken;
+        @JsonProperty("refresh_token")
+        public String refreshToken;
         public String scope;
-        public String id;
+        @JsonProperty("last_login")
+        public String lastLogin;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
