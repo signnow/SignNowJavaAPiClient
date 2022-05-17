@@ -46,10 +46,10 @@ public class User {
 
     @JsonInclude(JsonInclude.Include.NON_ABSENT)
     public static class UserAuthRequest {
-        @JsonProperty("grant_type")
-        public static final String grantType = "password";
         public final String username;
         public final String password;
+        @JsonProperty("grant_type")
+        public static final String grantType = "password";
         public final String scope;
 
         public UserAuthRequest(String username, String password) {
