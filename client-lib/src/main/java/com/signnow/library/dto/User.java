@@ -81,6 +81,7 @@ public class User {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class UserCreateRequest {
         public String email;
         public String password;
@@ -108,6 +109,7 @@ public class User {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class UserCreateResponse {
         public String id;
         public Integer verified;
