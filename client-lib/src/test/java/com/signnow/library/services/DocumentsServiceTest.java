@@ -64,6 +64,25 @@ class DocumentsServiceTest extends CommonServiceTestCase {
     }
 
     @Test
+    void moveDocument() throws SNException {
+        final Document.MoveDocumentResponse responseMock = mock(Document.MoveDocumentResponse.class);
+
+        when(clientMock.post(anyString()
+                , anyMap()
+                , any(Document.MoveDocumentRequest.class)
+                , eq(Document.MoveDocumentResponse.class))
+        ).thenReturn(responseMock);
+
+        final String result = service.moveDocument("1", "12345");
+
+        assertEquals(responseMock.result, result);  // not sure if useful as is null
+        verify(clientMock, times(1)).post(anyString()
+                , anyMap()
+                , any(Document.MoveDocumentRequest.class)
+                , eq(Document.MoveDocumentResponse.class));
+    }
+
+    @Test
     void getDocuments() throws SNException {
         List<Document> lst = new ArrayList<>();
         when(clientMock.get(anyString(), eq(null), ArgumentMatchers.<GenericType<List>>any())).thenReturn(lst);
