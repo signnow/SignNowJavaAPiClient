@@ -3,7 +3,7 @@ package com.signnow.library.exceptions;
 import com.signnow.library.dto.AuthError;
 
 public class SNAuthException extends SNException {
-    private AuthError.Type authError = AuthError.Type.UNKNOWN;
+    private final AuthError.Type authError;
 
     public SNAuthException(AuthError.Type error) {
         this.authError = error;
@@ -11,17 +11,15 @@ public class SNAuthException extends SNException {
 
     public SNAuthException(String message) {
         super(message);
+        this.authError = AuthError.Type.UNKNOWN;
     }
 
     public SNAuthException(String message, Throwable cause) {
         super(message, cause);
+        this.authError = AuthError.Type.UNKNOWN;
     }
 
     public AuthError.Type getAuthError() {
         return authError;
-    }
-
-    public void setAuthError(AuthError.Type authError) {
-        this.authError = authError;
     }
 }
