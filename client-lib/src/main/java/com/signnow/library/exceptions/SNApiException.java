@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SNApiException extends SNException {
-    List<Errors.ErrorInfo> errorInfo;
+    final transient List<Errors.ErrorInfo> errorInfo;
 
     public SNApiException(List<Errors.ErrorInfo> errors) {
         this.errorInfo = errors;
@@ -26,9 +26,11 @@ public class SNApiException extends SNException {
 
     public SNApiException(String message) {
         super(message);
+        this.errorInfo = null;
     }
 
     public SNApiException(String message, Throwable cause) {
         super(message, cause);
+        this.errorInfo = null;
     }
 }
