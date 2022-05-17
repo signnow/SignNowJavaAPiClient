@@ -88,16 +88,22 @@ public class User {
         public String firstName;
         @JsonProperty("last_name")
         public String lastName;
+        public String number;
 
         public UserCreateRequest(String email, String password) {
             this(email, password, null, null);
         }
 
         public UserCreateRequest(String email, String password, String firstName, String lastName) {
+            this(email, password, firstName, lastName, null);
+        }
+
+        public UserCreateRequest(String email, String password, String firstName, String lastName, String number) {
             this.email = email;
             this.password = password;
             this.firstName = firstName;
             this.lastName = lastName;
+            this.number = number;
         }
     }
 
