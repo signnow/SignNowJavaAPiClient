@@ -54,7 +54,7 @@ public class DocumentsService extends ApiService implements Documents {
 
     @Override
     public List<Document> getDocuments() throws SNException {
-        return client.get("/user/documentsv2", null, new GenericType<List<Document>>() {});
+        return client.get("/user/documentsv2", null, new GenericType<>() {});
     }
 
     @Override
