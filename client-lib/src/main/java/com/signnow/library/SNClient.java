@@ -104,7 +104,7 @@ public class SNClient implements ServiceProvider {
         return response.readEntity(returnType);
     }
 
-    public <E, T> T delete(String path, Map<String, String> parameters, Class<T> returnType) throws SNException {
+    public <T> T delete(String path, Map<String, String> parameters, Class<T> returnType) throws SNException {
         Response response = buildRequest(path, parameters).delete();
         checkAPIException(response);
         return response.readEntity(returnType);
