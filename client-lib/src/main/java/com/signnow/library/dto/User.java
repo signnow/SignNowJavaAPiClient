@@ -50,16 +50,21 @@ public class User {
         public final String username;
         public final String password;
         @JsonProperty("grant_type")
-        public static final String grantType = "password";
+        public final String grantType;
         public final String scope;
 
         public UserAuthRequest(String username, String password) {
-            this(username, password, "*");
+            this(username, password, "password", "*");
         }
 
         public UserAuthRequest(String username, String password, String scope) {
+            this(username, password, "password", scope);
+        }
+
+        public UserAuthRequest(String username, String password, String grantType, String scope) {
             this.username = username;
             this.password = password;
+            this.grantType = grantType;
             this.scope = scope;
         }
     }
