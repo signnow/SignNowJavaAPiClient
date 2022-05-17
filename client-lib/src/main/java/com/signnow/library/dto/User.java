@@ -47,7 +47,7 @@ public class User {
     @JsonInclude(JsonInclude.Include.NON_ABSENT)
     public static class UserAuthRequest {
         @JsonProperty("grant_type")
-        public final String grantType = "password";
+        public static final String grantType = "password";
         public final String username;
         public final String password;
         public final String scope;
