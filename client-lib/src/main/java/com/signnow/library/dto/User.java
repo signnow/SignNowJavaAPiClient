@@ -45,6 +45,7 @@ public class User {
     }
 
     @JsonInclude(JsonInclude.Include.NON_ABSENT)
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class UserAuthRequest {
         public final String username;
         public final String password;
@@ -64,6 +65,7 @@ public class User {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class UserAuthResponse {
         @JsonProperty("expires_in")
         public String expiresIn;
