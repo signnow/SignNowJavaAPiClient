@@ -2,6 +2,7 @@ package com.signnow.library.dto;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 
+@SuppressWarnings("java:S1104")  // field name equal to JsonProperty
 public class AuthError {
     public Type error;
 
