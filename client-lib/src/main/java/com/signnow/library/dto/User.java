@@ -68,7 +68,7 @@ public class User {
     @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class UserAuthResponse {
         @JsonProperty("expires_in")
-        public String expiresIn;
+        public Integer expiresIn;
         @JsonProperty("token_type")
         public String tokenType;
         @JsonProperty("access_token")
@@ -77,7 +77,7 @@ public class User {
         public String refreshToken;
         public String scope;
         @JsonProperty("last_login")
-        public String lastLogin;
+        public Integer lastLogin;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
