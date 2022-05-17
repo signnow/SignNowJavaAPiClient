@@ -116,6 +116,7 @@ public class User {
         public String email;
     }
 
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
     public static class UserInfo {
         public String id;
         @JsonProperty("first_name")
