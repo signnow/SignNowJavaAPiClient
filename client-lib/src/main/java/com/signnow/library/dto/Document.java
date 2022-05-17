@@ -193,4 +193,10 @@ public class Document extends GenericId {
             this.folderId = folderId;
         }
     }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    @SuppressWarnings("java:S1104")  // field name equal to JsonProperty
+    public static class MoveDocumentResponse {
+        public String result;
+    }
 }

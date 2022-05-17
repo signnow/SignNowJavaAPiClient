@@ -14,7 +14,7 @@ public interface Documents {
 
     String uploadDocumentWithTags(InputStream stream, String fileName) throws SNException;
 
-    void moveDocument(String documentId, String folderId) throws SNException;
+    String moveDocument(String documentId, String folderId) throws SNException;
 
     List<Document> getDocuments() throws SNException;
 

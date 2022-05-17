@@ -43,13 +43,13 @@ public class DocumentsService extends ApiService implements Documents {
     }
 
     @Override
-    public void moveDocument(String documentId, String folderId) throws SNException {
-        client.post(
+    public String moveDocument(String documentId, String folderId) throws SNException {
+        return client.post(
                 "/document/{documentId}/move",
                 Collections.singletonMap(Constants.DOCUMENT_ID, documentId),
                 new Document.MoveDocumentRequest(folderId),
-                String.class
-        );
+                Document.MoveDocumentResponse.class
+        ).result;
     }
 
     @Override
