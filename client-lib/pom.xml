@@ -5,7 +5,7 @@
 
     <groupId>com.signnow</groupId>
     <artifactId>api-client-lib</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <packaging>jar</packaging>
 
     <properties>

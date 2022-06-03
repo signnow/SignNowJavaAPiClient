@@ -27,6 +27,8 @@ public class Document extends GenericId {
      * Free form invites info
      */
     public List<DocumentSignRequestInfo> requests;
+    @JsonProperty("fields")
+    public List<FieldMetadata> fields;
 
     public static class SigningLinkRequest {
         @JsonProperty("document_id")
@@ -155,7 +157,6 @@ public class Document extends GenericId {
         }
     }
 
-
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Field {
         public int x;
@@ -173,6 +174,49 @@ public class Document extends GenericId {
 
         public String getType() {
             return type.toString();
+        }
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class FieldMetadata {
+        public String id;
+        public String type;
+        @JsonProperty("role_id")
+        public String roleId;
+        public String role;
+        public String originator;
+        public String fulfiller;
+        @JsonProperty("json_attributes")
+        public Attributes attributes;
+        @JsonProperty("field_request_id")
+        public String fieldRequestId;
+        @JsonProperty("element_id")
+        public String elementId;
+        @JsonProperty("field_request_canceled")
+        public boolean fieldRequestCanceled;
+        @JsonProperty("template_field_id")
+        public String templateFieldId;
+        @JsonProperty("field_id")
+        public String fieldId;
+
+        public String getType() {
+            return type.toString();
+        }
+
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static class Attributes {
+            @JsonProperty("page_number")
+            public String pageNumber;
+            public int x;
+            public int y;
+            public int width;
+            public int height;
+            public boolean required;
+            public String name;
+            public String label;
+            @JsonProperty("prefilled_text")
+            public String prefilledText;
         }
     }
 
