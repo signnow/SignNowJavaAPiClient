@@ -5,13 +5,11 @@ import com.signnow.library.dto.Errors;
 import com.signnow.library.dto.User;
 import com.signnow.library.exceptions.SNApiException;
 import com.signnow.library.exceptions.SNException;
-import com.signnow.library.facades.DocumentGroups;
-import com.signnow.library.facades.Documents;
-import com.signnow.library.facades.ServiceProvider;
-import com.signnow.library.facades.Templates;
+import com.signnow.library.facades.*;
 import com.signnow.library.services.DocumentGroupsService;
 import com.signnow.library.services.DocumentsService;
 import com.signnow.library.services.TemplatesService;
+import com.signnow.library.services.WebhookService;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -36,6 +34,7 @@ public class SNClient implements ServiceProvider {
     private WebTarget apiWebTarget;
     private Documents documentsService = new DocumentsService(this);
     private Templates templatesService = new TemplatesService(this);
+    private Webhooks webhooksService = new WebhookService(this);
     private DocumentGroups documentGroupsService = new DocumentGroupsService(this);
 
     protected SNClient(WebTarget apiWebTarget, User user) {
@@ -59,6 +58,11 @@ public class SNClient implements ServiceProvider {
     @Override
     public Templates templatesService() {
         return templatesService;
+    }
+
+    @Override
+    public Webhooks webhooksService() {
+        return webhooksService;
     }
 
     @Override

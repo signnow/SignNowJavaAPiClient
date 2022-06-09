@@ -14,7 +14,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DocumentsService extends ApiService implements Documents {
     public DocumentsService(SNClient client) {
@@ -73,6 +75,36 @@ public class DocumentsService extends ApiService implements Documents {
     }
 
     @Override
+    public Document.EmbeddedSigningInviteResponse createDocumentEmbeddedSignInvite(String documentId, Document.EmbeddedSigningInviteRequest request) throws SNException {
+        return client.post(
+                "/v2/documents/{document_id}/embedded-invites",
+                Collections.singletonMap("document_id", documentId),
+                request,
+                Document.EmbeddedSigningInviteResponse.class);
+    }
+
+    @Override
+    public String getDocumentEmbeddedSignInviteLink(String documentId, String inviteId, Document.EmbeddedInviteLinkRequest request) throws SNException {
+        Map<String, String> params = new HashMap<>();
+        params.put("document_id", documentId);
+        params.put("fieldInviteUniqueId", inviteId);
+        Document.EmbeddedInviteLinkResponse response = client.post(
+                "/v2/documents/{document_id}/embedded-invites/{fieldInviteUniqueId}/link",
+                params, request, Document.EmbeddedInviteLinkResponse.class);
+        return response.getLink();
+    }
+
+    @Override
+    public void prefillText(String documentId, List<Document.FieldText> request) throws SNException {
+        client.put(
+                "/v2/documents/{documentId}/prefill-texts",
+                Collections.singletonMap("documentId", documentId),
+                new Document.PrefillTextRequest(request),
+                String.class
+        );
+    }
+
+    @Override
     public void updateDocumentFields(String documentId, List<Document.Field> request) throws SNException {
         client.put(
                 "/document/{documentId}",
@@ -109,4 +141,5 @@ public class DocumentsService extends ApiService implements Documents {
                 Document.DocumentDownloadLink.class
         ).link;
     }
+
 }

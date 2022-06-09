@@ -2,8 +2,7 @@ package com.signnow.library.dto;
 
 import com.fasterxml.jackson.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Document extends GenericId {
@@ -28,6 +27,8 @@ public class Document extends GenericId {
      * Free form invites info
      */
     public List<DocumentSignRequestInfo> requests;
+    @JsonProperty("fields")
+    public List<FieldMetadata> fields;
 
     public static class SigningLinkRequest {
         @JsonProperty("document_id")
@@ -127,11 +128,32 @@ public class Document extends GenericId {
         }
     }
 
+    public static class PrefillTextRequest {
+        public final List<FieldText> fields;
+
+        public PrefillTextRequest(List<FieldText> fields) {
+            this.fields = fields;
+        }
+    }
+
     public static class FieldsUpdateRequest {
         public final List<Field> fields;
 
         public FieldsUpdateRequest(List<Field> fields) {
             this.fields = fields;
+        }
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class FieldText {
+        @JsonProperty("field_name")
+        public String fieldName;
+        @JsonProperty("prefilled_text")
+        public String prefilledText;
+
+        public FieldText(String name, String prefill) {
+            this.fieldName = name;
+            this.prefilledText = prefill;
         }
     }
 
@@ -155,6 +177,49 @@ public class Document extends GenericId {
         }
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class FieldMetadata {
+        public String id;
+        public String type;
+        @JsonProperty("role_id")
+        public String roleId;
+        public String role;
+        public String originator;
+        public String fulfiller;
+        @JsonProperty("json_attributes")
+        public Attributes attributes;
+        @JsonProperty("field_request_id")
+        public String fieldRequestId;
+        @JsonProperty("element_id")
+        public String elementId;
+        @JsonProperty("field_request_canceled")
+        public boolean fieldRequestCanceled;
+        @JsonProperty("template_field_id")
+        public String templateFieldId;
+        @JsonProperty("field_id")
+        public String fieldId;
+
+        public String getType() {
+            return type.toString();
+        }
+
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static class Attributes {
+            @JsonProperty("page_number")
+            public String pageNumber;
+            public int x;
+            public int y;
+            public int width;
+            public int height;
+            public boolean required;
+            public String name;
+            public String label;
+            @JsonProperty("prefilled_text")
+            public String prefilledText;
+        }
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class FieldInvite extends GenericId {
         public String status;
@@ -175,4 +240,56 @@ public class Document extends GenericId {
         public String link;
     }
 
+    /*------------------------Embedded invites------------------------*/
+    public static class EmbeddedSigningInviteRequest {
+        public final List<EmbeddedInvite> invites = new ArrayList<>();
+
+        public EmbeddedSigningInviteRequest(EmbeddedInvite... invite) {
+            this.invites.addAll(Arrays.asList(invite));
+        }
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class EmbeddedInvite {
+        public String email;
+        public String role_id;
+        public String role;
+        public int order = 1;
+        @JsonProperty("auth_method")
+        public String authMethod = "none";
+
+        public EmbeddedInvite(String email, String role) {
+            this.email = email;
+            this.role = role;
+        }
+    }
+
+    public static class EmbeddedSigningInviteResponse {
+        public List<InviteResponseData> data = new ArrayList<>();
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class InviteResponseData {
+        public String id;
+        public String email;
+        @JsonProperty("role_id")
+        public String roleId;
+        public int order;
+        public String status;
+    }
+
+    public static class EmbeddedInviteLinkRequest {
+        @JsonProperty("link_expiration")
+        public int linkExpiration = 45;
+        @JsonProperty("auth_method")
+        public String authMethod = "none";
+    }
+
+    public static class EmbeddedInviteLinkResponse {
+        public Map<String, String> data = new HashMap<>();
+
+        public String getLink() {
+            return data.get("link");
+        }
+    }
 }

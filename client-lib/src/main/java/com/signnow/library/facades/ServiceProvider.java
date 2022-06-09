@@ -6,4 +6,6 @@ public interface ServiceProvider {
     Templates templatesService();
 
     DocumentGroups documentGroupsService();
+
+    Webhooks webhooksService();
 }
