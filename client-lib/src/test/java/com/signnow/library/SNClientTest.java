@@ -1,13 +1,14 @@
 package com.signnow.library;
 
-import com.signnow.library.SNClient;
+//import com.signnow.library.SNClient;
 import com.signnow.library.dto.AuthError;
 import com.signnow.library.dto.Errors;
 import com.signnow.library.exceptions.SNException;
+import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.ws.rs.core.Response;
+//import javax.ws.rs.core.Response;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
